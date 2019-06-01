@@ -14,12 +14,11 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
 
-    lateinit var loginViewModel: LoginViewModel
+    private val loginViewModel by lazy { ViewModelProviders.of(this).get(LoginViewModel::class.java) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
-        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
 
         mobileNo.afterTextChanged {
             loginViewModel.loginDataChanged(

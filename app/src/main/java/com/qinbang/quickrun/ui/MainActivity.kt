@@ -30,12 +30,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
 
         deliveryManViewModle = ViewModelProviders.of(this).get(DeliveryManViewModle::class.java)
-        if (deliveryManViewModle.deliveryManLiveData.value == null) {
+
+        if (deliveryManViewModle.data.value == null) {
             startActivity(Intent(this, LoginActivity::class.java))
         }
 
         //用户信息更新
-        deliveryManViewModle.deliveryManLiveData.observe(this, Observer {
+        deliveryManViewModle.data.observe(this, Observer {
             if (it != null) {
                 nav_view.getHeaderView(0).findViewById<TextView>(R.id.name).text = it.name
                 nav_view.getHeaderView(0).findViewById<TextView>(R.id.mobileNo).text = it.mobileNo
