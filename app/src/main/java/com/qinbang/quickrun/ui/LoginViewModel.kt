@@ -1,4 +1,4 @@
-package com.qinbang.quickrun.ui.login
+package com.qinbang.quickrun.ui
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

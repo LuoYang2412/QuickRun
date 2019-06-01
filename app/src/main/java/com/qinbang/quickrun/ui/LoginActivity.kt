@@ -1,4 +1,4 @@
-package com.qinbang.quickrun.ui.login
+package com.qinbang.quickrun.ui
 
 import android.os.Bundle
 import android.text.Editable
@@ -9,26 +9,25 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.qinbang.quickrun.R
-import com.qinbang.quickrun.ui.MainActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
 
-    private val loginViewModel by lazy { ViewModelProviders.of(this).get(LoginViewModel::class.java) }
+    private val viewModel by lazy { ViewModelProviders.of(this).get(LoginViewModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         mobileNo.afterTextChanged {
-            loginViewModel.loginDataChanged(
+            viewModel.loginDataChanged(
                 mobileNo.text.toString(),
                 password.text.toString()
             )
         }
 
         password.afterTextChanged {
-            loginViewModel.loginDataChanged(
+            viewModel.loginDataChanged(
                 mobileNo.text.toString(),
                 password.text.toString()
             )
@@ -36,17 +35,17 @@ class LoginActivity : AppCompatActivity() {
 
         login.setOnClickListener {
             Thread.sleep(500)
-            loginViewModel.login(mobileNo.text.toString(), password.text.toString())
+            viewModel.login(mobileNo.text.toString(), password.text.toString())
             loading.visibility = View.VISIBLE
         }
 
         //所有输入正确
-        loginViewModel.inputSuccess.observe(this, Observer {
+        viewModel.inputSuccess.observe(this, Observer {
             login.isEnabled = it
         })
 
         //登录接口返回
-        loginViewModel.loginResult.observe(this, Observer {
+        viewModel.loginResult.observe(this, Observer {
             if (it) {
                 MainActivity.deliveryManViewModle.upData()
                 finish()

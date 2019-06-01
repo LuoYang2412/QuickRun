@@ -2,8 +2,10 @@ package com.qinbang.quickrun.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
+import android.util.Log
+import android.view.*
+import android.widget.AdapterView
+import android.widget.BaseAdapter
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -16,14 +18,20 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.qinbang.quickrun.R
-import com.qinbang.quickrun.ui.login.LoginActivity
+import com.qinbang.quickrun.data.model.Waybill
+import com.qinbang.quickrun.utils.GlideImageLoaderForBanner
+import com.youth.banner.BannerConfig
+import com.youth.banner.Transformer
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     companion object {
         lateinit var deliveryManViewModle: DeliveryManViewModle
     }
+
+    private val viewModle by lazy { MainViewModle() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +50,34 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 nav_view.getHeaderView(0).findViewById<TextView>(R.id.mobileNo).text = it.mobileNo
             }
         })
+
+        //设置Banner
+        val arrayList = ArrayList<Int>()
+        arrayList.add(R.drawable.ic_menu_camera)
+        arrayList.add(R.drawable.ic_menu_send)
+        arrayList.add(R.drawable.ic_menu_manage)
+        banner.setBannerStyle(BannerConfig.NOT_INDICATOR)
+            .setImageLoader(GlideImageLoaderForBanner())
+            .setImages(arrayList)
+            .setBannerAnimation(Transformer.DepthPage)
+            .isAutoPlay(true)
+            .setDelayTime(1500)
+            .setOnBannerListener {
+                Log.d("tag========", "$it")
+            }
+            .start()
+
+        //设置ListView
+        val myAdapter = MyAdapter()
+        listView.adapter = myAdapter
+        listView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            DeliveryManDetailActivity.goIn(this, myAdapter.getData().get(position).id)
+        }
+        viewModle.waybillLiveData.observe(this, Observer {
+            myAdapter.setData(it)
+        })
+
+        viewModle.getWaybillData("")
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -62,6 +98,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         navView.setNavigationItemSelectedListener(this)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        banner.startAutoPlay()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        banner.stopAutoPlay()
     }
 
     override fun onBackPressed() {
@@ -105,5 +151,54 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+}
+
+class MyAdapter : BaseAdapter() {
+    private val data = ArrayList<Waybill>()
+
+    fun setData(data: ArrayList<Waybill>) {
+        this.data.clear()
+        this.data.addAll(data)
+    }
+
+    fun getData(): ArrayList<Waybill> {
+        return data
+    }
+
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        val viewHolder: ViewHolder
+        val view: View
+        if (convertView == null) {
+            view = LayoutInflater.from(parent!!.context)
+                .inflate(R.layout.layout_delivery_task_item, parent, false)
+            viewHolder = ViewHolder(view)
+            view.tag = viewHolder
+        } else {
+            view = convertView
+            viewHolder = view.tag as ViewHolder
+        }
+        viewHolder.name.text = data.get(position).way
+        viewHolder.id.text = data.get(position).id
+        viewHolder.time.text = data.get(position).time
+        return view
+    }
+
+    override fun getItem(position: Int): Any {
+        return data.get(position)
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getCount(): Int {
+        return data.size
+    }
+
+    private class ViewHolder(view: View) {
+        val name by lazy { view.findViewById<TextView>(R.id.textView2) }
+        val id by lazy { view.findViewById<TextView>(R.id.textView3) }
+        val time by lazy { view.findViewById<TextView>(R.id.textView4) }
     }
 }

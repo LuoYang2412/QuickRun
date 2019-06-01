@@ -9,13 +9,16 @@ import com.qinbang.quickrun.data.model.DeliveryMan
  * 送货员信息ViewModel
  */
 class DeliveryManViewModle() : ViewModel() {
-    val data = MutableLiveData<DeliveryMan>()
+    val data by lazy { MutableLiveData<DeliveryMan>() }
     private val deliveryManDataSource: DeliveryManDataSource by lazy { DeliveryManDataSource() }
 
     init {
         upData()
     }
 
+    /**
+     * 更新送货员信息
+     */
     fun upData() {
         data.value = deliveryManDataSource.getData()
     }
