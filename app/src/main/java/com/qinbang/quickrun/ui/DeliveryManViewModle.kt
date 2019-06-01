@@ -9,7 +9,7 @@ import com.qinbang.quickrun.data.model.DeliveryMan
  * 送货员信息ViewModel
  */
 class DeliveryManViewModle() : ViewModel() {
-    val deliveryManLiveData = MutableLiveData<DeliveryMan>()
+    val data = MutableLiveData<DeliveryMan>()
     private val deliveryManDataSource: DeliveryManDataSource by lazy { DeliveryManDataSource() }
 
     init {
@@ -17,6 +17,6 @@ class DeliveryManViewModle() : ViewModel() {
     }
 
     fun upData() {
-        deliveryManLiveData.value = deliveryManDataSource.getData()
+        data.value = deliveryManDataSource.getData()
     }
 }
