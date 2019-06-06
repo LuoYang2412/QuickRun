@@ -4,8 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.AdapterView
-import android.widget.BaseAdapter
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -14,16 +12,17 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.qinbang.quickrun.R
 import com.qinbang.quickrun.data.model.Waybill
+import com.qinbang.quickrun.ui.widget.LinearSpacesItemDecoration
 import com.qinbang.quickrun.utils.GlideImageLoaderForBanner
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.layout_delivery_task_item.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -31,7 +30,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         lateinit var deliveryManViewModle: DeliveryManViewModle
     }
 
-    private val viewModle by lazy { MainViewModle() }
+    private val viewModle by lazy { ViewModelProviders.of(this).get(MainViewModle::class.java) }
+    private lateinit var historyTastListAdapter: HistoryTastListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         arrayList.add(R.drawable.ic_menu_camera)
         arrayList.add(R.drawable.ic_menu_send)
         arrayList.add(R.drawable.ic_menu_manage)
-        banner.setBannerStyle(BannerConfig.NOT_INDICATOR)
+        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
             .setImageLoader(GlideImageLoaderForBanner())
             .setImages(arrayList)
             .setBannerAnimation(Transformer.DepthPage)
@@ -67,14 +67,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             .start()
 
-        //设置ListView
-        val myAdapter = MyAdapter()
-        listView.adapter = myAdapter
-        listView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            DeliveryManDetailActivity.goIn(this, myAdapter.getData().get(position).id)
-        }
+        //设置List
+        historyTastListAdapter = HistoryTastListAdapter()
+        recyclerView5.adapter = historyTastListAdapter
+        recyclerView5.addItemDecoration(LinearSpacesItemDecoration(24))
+
         viewModle.waybillLiveData.observe(this, Observer {
-            myAdapter.setData(it)
+            historyTastListAdapter.data = it
         })
 
         viewModle.getWaybillData("")
@@ -82,11 +81,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val toggle = ActionBarDrawerToggle(
@@ -108,6 +102,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onStop() {
         super.onStop()
         banner.stopAutoPlay()
+    }
+
+    fun onClick(view: View) {
+        when (view.id) {
+            imageView2.id -> {
+                LoadingListActivity.goIn(this)
+            }
+            imageView3.id -> {
+                TransportRouteActivity.goIn(this)
+            }
+            imageView4.id -> {
+                LossReportActivity.goIn(this)
+            }
+            imageView5.id -> {
+                RiskReportingActivity.goIn(this)
+            }
+            cardView8.id -> {
+                DeliveryOrderDetailActivity.goIn(this, historyTastListAdapter.data[view.tag as Int].id)
+            }
+        }
     }
 
     override fun onBackPressed() {
@@ -154,51 +168,32 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 }
 
-class MyAdapter : BaseAdapter() {
-    private val data = ArrayList<Waybill>()
+class HistoryTastListAdapter : RecyclerView.Adapter<HistoryTastListAdapter.HistoryTaskViewHolder>() {
+    var data = ArrayList<Waybill>()
 
-    fun setData(data: ArrayList<Waybill>) {
-        this.data.clear()
-        this.data.addAll(data)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryTaskViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.layout_delivery_task_item, parent, false)
+        return HistoryTaskViewHolder(view)
     }
 
-    fun getData(): ArrayList<Waybill> {
-        return data
-    }
-
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val viewHolder: ViewHolder
-        val view: View
-        if (convertView == null) {
-            view = LayoutInflater.from(parent!!.context)
-                .inflate(R.layout.layout_delivery_task_item, parent, false)
-            viewHolder = ViewHolder(view)
-            view.tag = viewHolder
-        } else {
-            view = convertView
-            viewHolder = view.tag as ViewHolder
-        }
-        viewHolder.name.text = data.get(position).way
-        viewHolder.id.text = data.get(position).id
-        viewHolder.time.text = data.get(position).time
-        return view
-    }
-
-    override fun getItem(position: Int): Any {
-        return data.get(position)
-    }
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    override fun getCount(): Int {
+    override fun getItemCount(): Int {
         return data.size
     }
 
-    private class ViewHolder(view: View) {
-        val name by lazy { view.findViewById<TextView>(R.id.textView2) }
-        val id by lazy { view.findViewById<TextView>(R.id.textView3) }
-        val time by lazy { view.findViewById<TextView>(R.id.textView4) }
+    override fun onBindViewHolder(holder: HistoryTaskViewHolder, position: Int) {
+        holder.id.text = "货运单号:".plus(data.get(position).id)
+        holder.startPoint.text = data.get(position).way
+        holder.endPoint.text = "终点".plus(position)
+        holder.time.text = data.get(position).time
+        holder.itemView.tag = position
+    }
+
+
+    inner class HistoryTaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val id by lazy { itemView.findViewById<TextView>(R.id.textView3) }
+        val startPoint by lazy { itemView.findViewById<TextView>(R.id.textView2) }
+        val endPoint by lazy { itemView.findViewById<TextView>(R.id.textView27) }
+        val time by lazy { itemView.findViewById<TextView>(R.id.textView4) }
     }
 }

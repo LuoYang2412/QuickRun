@@ -11,6 +11,9 @@ import androidx.lifecycle.ViewModelProviders
 import com.qinbang.quickrun.R
 import kotlinx.android.synthetic.main.activity_login.*
 
+/**
+ * 登录
+ */
 class LoginActivity : AppCompatActivity() {
 
     private val viewModel by lazy { ViewModelProviders.of(this).get(LoginViewModel::class.java) }

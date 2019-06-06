@@ -15,7 +15,32 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.DeliveryManDetailActivity">
+        <activity
+                android:name=".ui.TransportRouteActivity"
+                android:label="@string/transport_route">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".ui.MainActivity"/>
+        </activity>
+        <activity
+                android:name=".ui.RiskReportingActivity"
+                android:label="@string/risk_reporting">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".ui.MainActivity"/>
+        </activity>
+        <activity
+                android:name=".ui.LossReportActivity"
+                android:label="@string/loss_report">
+        </activity>
+        <activity
+                android:name=".ui.LoadingListActivity"
+                android:label="@string/allocate_cargo_list">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".ui.MainActivity"/>
+        </activity>
+        <activity android:name=".ui.DeliveryOrderDetailActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".ui.MainActivity"/>
