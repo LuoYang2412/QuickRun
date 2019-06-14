@@ -5,21 +5,17 @@ import androidx.core.content.edit
 import com.google.gson.Gson
 import com.qinbang.quickrun.QuickRunApplication
 import com.qinbang.quickrun.data.model.DeliveryMan
-import com.qinbang.quickrun.utils.EncryUtils
 
 /**
  * 送货员数据
  */
-class DeliveryManDataSource {
+object DeliveryManDataSource {
     private val mSharedPreferences by lazy { PreferenceManager.getDefaultSharedPreferences(QuickRunApplication.application) }
     private val mGson by lazy { Gson() }
     private var deliveryMan: DeliveryMan? = null
 
     fun save(deliveryManObject: DeliveryMan) {
-        val deliveryManEncryString =
-            EncryUtils.getInstance()
-                .encryptString(mGson.toJson(deliveryManObject), QuickRunApplication.application.packageName)
-        mSharedPreferences.edit { putString("deliveryMan", deliveryManEncryString) }
+        mSharedPreferences.edit { putString("deliveryMan", mGson.toJson(deliveryManObject)) }
         deliveryMan = null
     }
 
@@ -28,21 +24,18 @@ class DeliveryManDataSource {
         save(deliveryManObject)
     }
 
-    private fun clean() {
+    fun clean() {
         mSharedPreferences.edit { clear() }
         deliveryMan = null
     }
 
     fun getData(): DeliveryMan? {
         if (deliveryMan == null) {
-            val deliveryManEncryString =
+            val deliveryManString =
                 mSharedPreferences
                     .getString("deliveryMan", null)
-            if (deliveryManEncryString != null) {
-                val deliveryManDecryptString =
-                    EncryUtils.getInstance()
-                        .decryptString(deliveryManEncryString, QuickRunApplication.application.packageName)
-                deliveryMan = mGson.fromJson(deliveryManDecryptString, DeliveryMan::class.java)
+            if (deliveryManString != null) {
+                deliveryMan = mGson.fromJson(deliveryManString, DeliveryMan::class.java)
             }
         }
         return deliveryMan

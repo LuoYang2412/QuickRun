@@ -1,33 +1,37 @@
-package com.qinbang.quickrun.ui
+package com.qinbang.quickrun.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.qinbang.quickrun.data.DeliveryManDataSource
 import com.qinbang.quickrun.net.QuickRunNetwork
+import com.qinbang.quickrun.net.ResultOfView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class LoginViewModel : ViewModel() {
-    var loginResult = MutableLiveData<Boolean>()
+    val loginResult = MutableLiveData<ResultOfView>()
     var inputSuccess = MutableLiveData<Boolean>()
-    val deliveryManDataSource: DeliveryManDataSource by lazy { DeliveryManDataSource() }
 
     fun login(mobileNo: String, password: String) {
         viewModelScope.launch {
-            loginResult.value = withContext(Dispatchers.IO) {
-                val resource = QuickRunNetwork.getInstance().login(mobileNo, password)
-                if (resource.success) {
-                    deliveryManDataSource.save(resource.data!!)
+            try {
+                loginResult.value = withContext(Dispatchers.IO) {
+                    val resource = QuickRunNetwork.getInstance().login(mobileNo, password)
+                    if (resource.success) {
+                        DeliveryManDataSource.save(resource.data!!)
+                    }
+                    ResultOfView(resource.success, resource.message + "")
                 }
-                resource.success
+            } catch (t: Throwable) {
+                loginResult.value = ResultOfView(false, t.message + "")
             }
         }
     }
 
     fun loginOut() {
-
+        DeliveryManDataSource.clean()
     }
 
     fun loginDataChanged(mobileNo: String, password: String) {
@@ -45,5 +49,4 @@ class LoginViewModel : ViewModel() {
     private fun isPassword(password: String): Boolean {
         return password.length >= 6
     }
-
 }

@@ -20,4 +20,4 @@ package com.qinbang.quickrun.net
  * A generic class that holds a value with its loading status.
  * @param <T>
 </T> */
-data class Resource<T>(val success: Boolean, val data: T?, val message: String?)
+data class Resource<T>(val code: String, val success: Boolean, val data: T?, val message: String?)

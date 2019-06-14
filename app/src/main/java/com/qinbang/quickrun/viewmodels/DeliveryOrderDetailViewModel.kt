@@ -1,4 +1,4 @@
-package com.qinbang.quickrun.ui
+package com.qinbang.quickrun.viewmodels
 
 import androidx.lifecycle.ViewModel
 

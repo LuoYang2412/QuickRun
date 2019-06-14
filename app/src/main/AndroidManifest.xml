@@ -20,6 +20,7 @@
             tools:ignore="GoogleAppIndexingWarning"
             tools:targetApi="m">
         <activity
+                android:screenOrientation="portrait"
                 android:name=".ui.TransportRouteActivity"
                 android:label="@string/transport_route">
             <meta-data
@@ -27,6 +28,7 @@
                     android:value=".ui.MainActivity"/>
         </activity>
         <activity
+                android:screenOrientation="portrait"
                 android:name=".ui.RiskReportingActivity"
                 android:label="@string/risk_reporting">
             <meta-data
@@ -34,32 +36,39 @@
                     android:value=".ui.MainActivity"/>
         </activity>
         <activity
+                android:screenOrientation="portrait"
                 android:name=".ui.LossReportActivity"
                 android:label="@string/loss_report">
         </activity>
         <activity
+                android:screenOrientation="portrait"
                 android:name=".ui.LoadingListActivity"
                 android:label="@string/allocate_cargo_list">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".ui.MainActivity"/>
         </activity>
-        <activity android:name=".ui.DeliveryOrderDetailActivity">
+        <activity
+                android:name=".ui.DeliveryOrderDetailActivity"
+                android:label="货单详情"
+                android:screenOrientation="portrait">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".ui.MainActivity"/>
         </activity>
         <activity
+                android:screenOrientation="portrait"
                 android:name=".ui.LoginActivity"
                 android:label="@string/title_activity_login">
         </activity>
         <activity
+                android:screenOrientation="portrait"
                 android:name=".ui.MainActivity"
+                android:launchMode="singleTop"
                 android:label="@string/app_name"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>

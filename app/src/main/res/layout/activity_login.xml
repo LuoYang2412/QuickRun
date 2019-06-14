@@ -21,11 +21,12 @@
             android:layout_marginEnd="24dp"
 
             android:hint="@string/prompt_mobileNo"
-            android:inputType="textEmailAddress"
+            android:inputType="phone"
             android:selectAllOnFocus="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:maxLength="11"/>
 
     <EditText
             android:id="@+id/password"

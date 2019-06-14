@@ -28,26 +28,30 @@
                     android:text="货运单号："
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/editText3"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/editText3"
                     android:id="@+id/textView17"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginBottom="32dp"/>
+                    />
 
             <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
+                    android:inputType="textMultiLine|textPersonName"
                     android:ems="10"
                     android:id="@+id/editText3"
                     app:layout_constraintStart_toEndOf="@+id/textView17"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/textView17"
                     app:layout_constraintEnd_toStartOf="@+id/imageView8"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"/>
+                    android:layout_marginRight="8dp"
+                    tools:text="ger6457yttyk80768456hgdfgd345324ega"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="16dp"
+                    android:enabled="false"/>
 
             <ImageView
                     android:layout_width="wrap_content"
@@ -58,7 +62,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:id="@+id/imageView8"
                     app:layout_constraintTop_toTopOf="@+id/editText3"
-                    app:layout_constraintBottom_toBottomOf="@+id/editText3"/>
+                    app:layout_constraintBottom_toBottomOf="@+id/editText3"
+                    android:visibility="invisible"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

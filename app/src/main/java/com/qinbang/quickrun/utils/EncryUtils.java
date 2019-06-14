@@ -12,6 +12,7 @@ import javax.security.auth.x500.X500Principal;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
+import java.nio.charset.Charset;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.KeyStore;
@@ -122,7 +123,7 @@ public class EncryUtils {
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                 CipherOutputStream cipherOutputStream = new CipherOutputStream(
                         outputStream, inCipher);
-                cipherOutputStream.write(needEncryptWord.getBytes("UTF-8"));
+                cipherOutputStream.write(needEncryptWord.getBytes(Charset.forName("utf-8")));
                 cipherOutputStream.close();
 
                 vals = outputStream.toByteArray();

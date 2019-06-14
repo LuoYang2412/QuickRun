@@ -43,7 +43,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/textView21"
             app:layout_constraintEnd_toEndOf="@+id/textView21"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"/>
+            android:layout_marginRight="8dp"
+            android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="0dp"

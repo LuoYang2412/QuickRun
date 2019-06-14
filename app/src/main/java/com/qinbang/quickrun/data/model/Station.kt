@@ -6,8 +6,9 @@ package com.qinbang.quickrun.data.model
 data class Station(
     val id: String,
     val name: String,
+    val sort: String,
     var status: StationStatus = StationStatus.WILL,
-    val orders: ArrayList<Order>
+    var orders: ArrayList<Order>
 ) {
     enum class StationStatus {
         ED, ING, WILL

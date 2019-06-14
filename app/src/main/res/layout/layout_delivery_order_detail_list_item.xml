@@ -34,7 +34,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 tools:text="4648941"
-                android:textColor="@color/colorPrimary"/>
+                />
 
         <TextView
                 android:text="提货地点："

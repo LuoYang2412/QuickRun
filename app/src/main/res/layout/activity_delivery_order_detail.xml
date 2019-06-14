@@ -13,20 +13,19 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="#FFA726"
             android:id="@+id/constraintLayout">
 
         <TextView
                 android:text="货运单号："
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
                 android:id="@+id/textView28"
-                android:textColor="@android:color/white"/>
+                android:gravity="center_vertical"/>
 
         <TextView
                 android:layout_width="0dp"
@@ -38,9 +37,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
-                android:textColor="@android:color/white"/>
+                />
 
         <TextView
                 android:layout_width="wrap_content"
@@ -51,7 +48,8 @@
                 app:layout_constraintStart_toEndOf="@+id/textView33"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white"
+                android:visibility="gone"/>
 
         <TextView
                 android:text="路线："
@@ -65,7 +63,8 @@
                 android:gravity="right"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white"
+                android:visibility="gone"/>
 
         <TextView
                 android:layout_width="0dp"
@@ -82,7 +81,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/textView30"
                 android:maxLines="2"
                 android:ellipsize="end"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white"
+                android:visibility="gone"/>
 
         <TextView
                 android:text="运单耗时："
@@ -95,7 +95,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView30"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white"
+                android:visibility="gone"/>
 
         <TextView
                 android:text="运单损耗："
@@ -108,7 +109,8 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintTop_toBottomOf="@+id/textView32"
                 app:layout_constraintEnd_toEndOf="@+id/textView32"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white"
+                android:visibility="gone"/>
 
         <TextView
                 android:layout_width="wrap_content"
@@ -119,7 +121,8 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 tools:text="8小时"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white"
+                android:visibility="gone"/>
 
         <TextView
                 android:text="完成时间："
@@ -134,7 +137,8 @@
                 app:layout_constraintEnd_toEndOf="@+id/textView33"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white"
+                android:visibility="gone"/>
 
         <TextView
                 android:layout_width="wrap_content"
@@ -145,7 +149,8 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 tools:text="2019-6-6 10:36:12"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white"
+                android:visibility="gone"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView

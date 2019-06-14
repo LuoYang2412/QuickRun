@@ -5,10 +5,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.qinbang.quickrun.R
+import com.qinbang.quickrun.viewmodels.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 
 /**
@@ -21,6 +23,11 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        if (MainActivity.deliveryManViewModle.data.value!=null){
+            viewModel.loginOut()
+            MainActivity.deliveryManViewModle.upData()
+        }
 
         mobileNo.afterTextChanged {
             viewModel.loginDataChanged(
@@ -37,7 +44,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
         login.setOnClickListener {
-            Thread.sleep(500)
             viewModel.login(mobileNo.text.toString(), password.text.toString())
             loading.visibility = View.VISIBLE
         }
@@ -49,9 +55,13 @@ class LoginActivity : AppCompatActivity() {
 
         //登录接口返回
         viewModel.loginResult.observe(this, Observer {
-            if (it) {
+            if (it.success) {
+                loading.visibility = View.GONE
                 MainActivity.deliveryManViewModle.upData()
                 finish()
+            } else {
+                loading.visibility = View.GONE
+                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
             }
         })
     }

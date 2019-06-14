@@ -29,25 +29,30 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView14"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginBottom="32dp"/>
+                    app:layout_constraintBottom_toBottomOf="@+id/editText"
+                    app:layout_constraintTop_toTopOf="@+id/editText"
+                    />
 
             <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/textView14"
+                    android:inputType="textMultiLine|textPersonName"
                     android:ems="10"
                     android:id="@+id/editText"
                     app:layout_constraintStart_toEndOf="@+id/textView14"
                     android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toStartOf="@+id/imageView6"
-                    android:layout_marginRight="8dp"/>
+                    android:layout_marginRight="8dp"
+                    tools:text="ertyewrge642376errgruyrty45utyje"
+                    android:maxLines="2"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginBottom="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
             <ImageView
                     android:layout_width="wrap_content"

@@ -1,4 +1,4 @@
-package com.qinbang.quickrun.ui
+package com.qinbang.quickrun.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +10,6 @@ import com.qinbang.quickrun.data.model.DeliveryMan
  */
 class DeliveryManViewModle() : ViewModel() {
     val data by lazy { MutableLiveData<DeliveryMan>() }
-    private val deliveryManDataSource: DeliveryManDataSource by lazy { DeliveryManDataSource() }
 
     init {
         upData()
@@ -20,6 +19,6 @@ class DeliveryManViewModle() : ViewModel() {
      * 更新送货员信息
      */
     fun upData() {
-        data.value = deliveryManDataSource.getData()
+        data.value = DeliveryManDataSource.getData()
     }
 }

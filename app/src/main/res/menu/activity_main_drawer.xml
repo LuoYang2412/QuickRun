@@ -21,9 +21,9 @@
     <group android:title="功能">
         <menu>
             <item
-                    android:id="@+id/nav_outLogin"
+                    android:id="@+id/nav_out_login"
                     android:icon="@android:drawable/sym_call_outgoing"
-                    android:title="退出登录"/>
+                    android:title="登入/登出"/>
             <item
                     android:id="@+id/nav_share"
                     android:icon="@drawable/ic_menu_share"

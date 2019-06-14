@@ -1,6 +1,8 @@
 package com.qinbang.quickrun.net
 
+import android.util.Log
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -9,7 +11,11 @@ object ServiceCreator {
 
     private const val BASE_URL = "https://www.easy-mock.com/mock/5bf25d3c34392218c898a66b/example/"
 
-    private val httpClient = OkHttpClient.Builder()
+    const val IMAGE_BASE_URL = "${BASE_URL}upload/"
+
+    private val httpClient = OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor {
+        Log.d("NetWork", it)
+    }.setLevel(HttpLoggingInterceptor.Level.BODY))
 
     private val builder = Retrofit.Builder()
         .baseUrl(BASE_URL)
