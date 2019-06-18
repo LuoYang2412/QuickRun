@@ -24,9 +24,9 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        if (MainActivity.deliveryManViewModle.data.value!=null){
+        if (MainActivity.mainViewModle.deliveryManData.value!=null){
             viewModel.loginOut()
-            MainActivity.deliveryManViewModle.upData()
+            MainActivity.mainViewModle.upData()
         }
 
         mobileNo.afterTextChanged {
@@ -57,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel.loginResult.observe(this, Observer {
             if (it.success) {
                 loading.visibility = View.GONE
-                MainActivity.deliveryManViewModle.upData()
+                MainActivity.mainViewModle.upData()
                 finish()
             } else {
                 loading.visibility = View.GONE

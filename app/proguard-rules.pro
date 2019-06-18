@@ -65,3 +65,13 @@
  # and replaces all potential values with null. Explicitly keeping the interfaces prevents this.
  -if interface * { @retrofit2.http.* <methods>; }
  -keep,allowobfuscation interface <1>
+
+# BaseRecyclerViewAdapterHelper
+ -keep class com.chad.library.adapter.** {
+ *;
+ }
+ -keep public class * extends com.chad.library.adapter.base.BaseQuickAdapter
+ -keep public class * extends com.chad.library.adapter.base.BaseViewHolder
+ -keepclassmembers  class **$** extends com.chad.library.adapter.base.BaseViewHolder {
+      <init>(...);
+ }

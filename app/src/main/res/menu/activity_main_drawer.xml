@@ -5,10 +5,6 @@
 
     <group android:checkableBehavior="single">
         <item
-                android:id="@+id/nav_home"
-                android:icon="@drawable/ic_menu_camera"
-                android:title="@string/menu_phone_edit"/>
-        <item
                 android:id="@+id/nav_gallery"
                 android:icon="@drawable/ic_menu_gallery"
                 android:title="@string/menu_delivery_task"/>
@@ -18,8 +14,12 @@
                 android:title="@string/menu_risk_reports"/>
     </group>
 
-    <group android:title="功能">
+    <item android:title="功能">
         <menu>
+            <item
+                    android:id="@+id/nav_phone_edit"
+                    android:icon="@drawable/ic_menu_camera"
+                    android:title="@string/menu_phone_edit"/>
             <item
                     android:id="@+id/nav_out_login"
                     android:icon="@android:drawable/sym_call_outgoing"
@@ -33,6 +33,6 @@
                     android:icon="@drawable/ic_menu_send"
                     android:title="@string/menu_send"/>
         </menu>
-    </group>
+    </item>
 
 </menu>

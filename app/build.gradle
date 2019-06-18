@@ -53,4 +53,5 @@ dependencies {
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
     implementation 'com.zhihu.android:matisse:0.5.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.14.2'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
 }

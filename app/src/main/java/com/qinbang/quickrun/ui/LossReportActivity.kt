@@ -25,9 +25,10 @@ import kotlinx.android.synthetic.main.activity_loss_report.*
 class LossReportActivity : AppCompatActivity() {
 
     companion object {
-        fun goIn(context: Context, orderId: String? = null) {
+        fun goIn(context: Context, orderId: String? = null, shipmentNumber: String = "") {
             val intent = Intent(context, LossReportActivity::class.java)
             intent.putExtra("orderId", orderId)
+            intent.putExtra("shipmentNumber", shipmentNumber)
             context.startActivity(intent)
         }
     }
@@ -39,8 +40,9 @@ class LossReportActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         val orderId = intent.getStringExtra("orderId")
-        if (orderId != null) {
-            editText.setText(orderId)
+        val shipmentNumber = intent.getStringExtra("shipmentNumber")
+        if (shipmentNumber != null) {
+            editText.setText(shipmentNumber)
             editText.isEnabled = false
         }
     }

@@ -45,6 +45,12 @@ class QuickRunNetwork {
     suspend fun app_order_inDistribution(freightOrderId: String, pickUpId: String, userId: String) =
         deliveryService.app_order_inDistribution(freightOrderId, pickUpId, userId).await()
 
+    suspend fun app_changeMobilePhone(newPhone: String, userId: String) =
+        deliveryService.app_changeMobilePhone(newPhone, userId).await()
+
+    suspend fun app_changePassword(newPassword: String, oldPassword: String, userId: String) =
+        deliveryService.app_changePassword(newPassword, oldPassword, userId).await()
+
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
             enqueue(object : Callback<T> {

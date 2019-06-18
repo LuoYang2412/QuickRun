@@ -23,4 +23,6 @@
     <string name="loss_report">损耗申报</string>
     <string name="risk_reporting">紧急报险</string>
     <string name="transport_route">送货路线</string>
+    <string name="logistics_id">物流单号：</string>
+    <string name="freight_id">货运单号：</string>
 </resources>

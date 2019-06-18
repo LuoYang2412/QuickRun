@@ -29,7 +29,7 @@ class LoadingListViewModel : ViewModel() {
             try {
                 netResult.value = withContext(Dispatchers.IO) {
                     val resource = QuickRunNetwork.getInstance()
-                        .app_freightOrder_getAll("0", MainActivity.deliveryManViewModle.data.value!!.uid)
+                        .app_freightOrder_getAll("0", MainActivity.mainViewModle.deliveryManData.value!!.uid)
                     if (resource.success) {
                         val jsonElement = resource.data!!["freightOrderList"].asJsonArray[0]
                         activeWayBill.postValue(mGson.fromJson<Waybill>(jsonElement, Waybill::class.java))
@@ -37,7 +37,7 @@ class LoadingListViewModel : ViewModel() {
                     ResultOfView(resource.success, "".plus(resource.message))
                 }
             } catch (t: Throwable) {
-                netResult.value = ResultOfView(false, "".plus(t.message))
+                netResult.value = ResultOfView(false, "".plus(t.message), Constants.GET_ACT_WAY_BILL)
             }
         }
     }
@@ -51,7 +51,7 @@ class LoadingListViewModel : ViewModel() {
             try {
                 netResult.value = withContext(Dispatchers.IO) {
                     val resource = QuickRunNetwork.getInstance()
-                        .app_order_getAll(freightOrderId, "", MainActivity.deliveryManViewModle.data.value!!.uid)
+                        .app_order_getAll(freightOrderId, "", MainActivity.mainViewModle.deliveryManData.value!!.uid)
                     if (resource.success) {
                         orders.postValue(
                             mGson.fromJson(
@@ -67,6 +67,7 @@ class LoadingListViewModel : ViewModel() {
             }
         }
     }
+
     /**
      * 修改订单状态
      * @param pickUpId ""表示装货完成状态，有值表示提货点下货完成
@@ -77,12 +78,12 @@ class LoadingListViewModel : ViewModel() {
                 netResult.value = withContext(Dispatchers.IO) {
                     val resource = QuickRunNetwork.getInstance().app_order_inDistribution(
                         freightOrderId,
-                        pickUpId, MainActivity.deliveryManViewModle.data.value!!.uid
+                        pickUpId, MainActivity.mainViewModle.deliveryManData.value!!.uid
                     )
-                        ResultOfView(resource.success, "".plus(resource.message),Constants.SET_WAYBILL_OR_ORDER_STATUS)
+                    ResultOfView(resource.success, "".plus(resource.message), Constants.SET_WAYBILL_OR_ORDER_STATUS)
                 }
             } catch (t: Throwable) {
-                netResult.value = ResultOfView(false, "".plus(t.message),Constants.SET_WAYBILL_OR_ORDER_STATUS)
+                netResult.value = ResultOfView(false, "".plus(t.message), Constants.SET_WAYBILL_OR_ORDER_STATUS)
             }
         }
     }

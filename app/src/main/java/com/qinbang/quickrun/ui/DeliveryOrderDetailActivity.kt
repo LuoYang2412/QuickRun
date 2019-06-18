@@ -73,7 +73,7 @@ class DeliveryOrderListAdapter : RecyclerView.Adapter<DeliveryOrderListAdapter.D
     }
 
     override fun onBindViewHolder(holder: DeliveryOrderListViewHolder, position: Int) {
-        holder.orderId.text = data[position].id
+        holder.orderId.text = data[position].shipmentNumber
         holder.address.text = data[position].adress
         holder.status.text = when (data[position].shipState) {
             -2 -> "待拣货"

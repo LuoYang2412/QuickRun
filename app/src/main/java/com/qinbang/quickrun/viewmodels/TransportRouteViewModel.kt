@@ -28,7 +28,7 @@ class TransportRouteViewModel : ViewModel() {
             try {
                 netResult.value = withContext(Dispatchers.IO) {
                     val resource = QuickRunNetwork.getInstance()
-                        .app_route_getRoute(freightOrderId, MainActivity.deliveryManViewModle.data.value!!.uid)
+                        .app_route_getRoute(freightOrderId, MainActivity.mainViewModle.deliveryManData.value!!.uid)
                     if (resource.success) {
                         val routeStr = resource.data!!["route"].asString
                         val routeJsO = mGson.fromJson(routeStr, JsonObject::class.java)

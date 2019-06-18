@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.qinbang.quickrun.data.DeliveryManDataSource
+import com.qinbang.quickrun.data.model.DeliveryMan
 import com.qinbang.quickrun.data.model.Waybill
 import com.qinbang.quickrun.net.QuickRunNetwork
 import com.qinbang.quickrun.net.ResultOfView
@@ -17,6 +19,18 @@ class MainViewModle : ViewModel() {
     val netResult = MutableLiveData<ResultOfView>()
     val waybillLiveData by lazy { MutableLiveData<ArrayList<Waybill>>() }
 
+    val deliveryManData by lazy { MutableLiveData<DeliveryMan>() }
+
+    init {
+        upData()
+    }
+
+    /**
+     * 更新送货员信息
+     */
+    fun upData() {
+        deliveryManData.value = DeliveryManDataSource.getData()
+    }
     /**
      * 获取历史运单号
      */
@@ -25,7 +39,7 @@ class MainViewModle : ViewModel() {
             try {
                 netResult.value = withContext(Dispatchers.IO) {
                     val resource = QuickRunNetwork.getInstance()
-                        .app_freightOrder_getAll("1", MainActivity.deliveryManViewModle.data.value!!.uid)
+                        .app_freightOrder_getAll("1", MainActivity.mainViewModle.deliveryManData.value!!.uid)
                     if (resource.success) {
                         val freightOrderList = resource.data!!["freightOrderList"]
                         val type = object : TypeToken<ArrayList<Waybill>>() {}.type

@@ -1,6 +1,7 @@
 package com.qinbang.quickrun.ui
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -62,7 +64,16 @@ class TransportRouteActivity : AppCompatActivity() {
         })
         loadingListViewModel.orders.observe(this, Observer {
             //获取订单成功，组装数据显示
+            var shipStateDone = true
             it.map { order ->
+                shipStateDone = order.shipState == 7 && shipStateDone
+                if (shipStateDone) {
+                    AlertDialog.Builder(this)
+                        .setMessage("物流单已全部送达")
+                        .setPositiveButton("确定", DialogInterface.OnClickListener { dialog, which ->
+                            finish()
+                        }).create().show()
+                }
                 viewModel.stationsLiveData.value!!.map { station ->
                     if (order.pickUpId == station.id) {
                         if (station.orders == null) {
@@ -77,6 +88,12 @@ class TransportRouteActivity : AppCompatActivity() {
                 index = viewModel.currentStation.value!! - 1
             } else if (viewModel.currentStation.value!! > viewModel.stationsLiveData.value!!.size) {
                 index = viewModel.stationsLiveData.value!!.size - 1
+            }
+            if (viewModel.stationsLiveData.value!![index].orders == null) {
+                loadingListViewModel.setWaybillOrOrderStatus(
+                    loadingListViewModel.activeWayBill.value!!.id,
+                    viewModel.stationsLiveData.value!![index].id
+                )
             }
             (recyclerView4.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
                 index,
@@ -116,6 +133,16 @@ class TransportRouteActivity : AppCompatActivity() {
             } else {
                 if (it.api == Constants.SET_WAYBILL_OR_ORDER_STATUS) {
                     findViewById<Button>(R.id.loading_sub_btn).isEnabled = true
+                } else if (it.api == Constants.GET_ACT_WAY_BILL) {
+                    if (it.message.contains("Size")) {
+                        AlertDialog.Builder(this)
+                            .setMessage("暂无路线信息")
+                            .setPositiveButton("确定", DialogInterface.OnClickListener { dialog, which ->
+                                finish()
+                            })
+                            .create()
+                            .show()
+                    }
                 }
                 Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
             }
@@ -125,14 +152,19 @@ class TransportRouteActivity : AppCompatActivity() {
     fun onClick(view: View) {
         when (view.id) {
             R.id.constraintLayout1 -> {
-                val orders = stationListAdapter.data[view.tag as Int].orders
+                val index = view.tag as Int
+                val orders = stationListAdapter.data[index].orders
                 stationOrderListAdapter.showSubBtn =
-                    viewModel.stationsLiveData.value!![view.tag as Int].status == Station.StationStatus.ING
-                stationOrderListAdapter.data = orders?: ArrayList<Order>()
-                textView21.text = stationListAdapter.data[view.tag as Int].name
+                    viewModel.stationsLiveData.value!![index].status == Station.StationStatus.ING
+                stationOrderListAdapter.data = orders ?: ArrayList<Order>()
+                textView21.text = stationListAdapter.data[index].name
             }
             R.id.textView25 -> {
-                LossReportActivity.goIn(this, stationOrderListAdapter.data[view.tag as Int].id)
+                LossReportActivity.goIn(
+                    this,
+                    stationOrderListAdapter.data[view.tag as Int].id,
+                    stationOrderListAdapter.data[view.tag as Int].shipmentNumber
+                )
             }
             R.id.loading_sub_btn -> {
                 val pickUpId = view.tag as String
@@ -198,7 +230,7 @@ class StationOrderListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == TYPE_FOOTER_VIEW) {
             val button = Button(parent.context)
-            button.text = "完成"
+            button.text = "确认送达"
             button.id = R.id.loading_sub_btn
             val layoutParams =
                 RecyclerView.LayoutParams(
@@ -215,7 +247,7 @@ class StationOrderListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
     }
 
     override fun getItemCount(): Int {
-        if (showSubBtn) {
+        if (showSubBtn && data.size > 0) {
             return data.size + 1
         } else {
             return data.size
@@ -223,7 +255,7 @@ class StationOrderListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (position == data.size && showSubBtn) {
+        if (position == data.size && showSubBtn && data.size > 0) {
             return TYPE_FOOTER_VIEW
         } else {
             return super.getItemViewType(position)
@@ -237,7 +269,7 @@ class StationOrderListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
                 (it.context as TransportRouteActivity).onClick(it)
             }
         } else if (holder is StationOrderViewHolder) {
-            holder.orderId.text = data[position].id
+            holder.orderId.text = data[position].shipmentNumber
             holder.status.text =
                 when (data[position].shipState) {
                     -2 -> "待拣货"

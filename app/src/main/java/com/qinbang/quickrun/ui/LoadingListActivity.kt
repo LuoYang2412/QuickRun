@@ -1,6 +1,7 @@
 package com.qinbang.quickrun.ui
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -44,13 +46,14 @@ class LoadingListActivity : AppCompatActivity() {
         val mAdapter = MyLoadingListAdapter()
         recyclerView2.adapter = mAdapter
 
-        viewModel.orders.observe(this, Observer {
-            mAdapter.data = it
-        })
         viewModel.activeWayBill.observe(this, Observer {
             viewModel.getOrders(it.id)
-            textView11.text = "货运单号：".plus(it.num)
-            mAdapter.showSubBtn = it.state == 0
+            textView11.text = resources.getString(R.string.freight_id).plus(it.num)
+            mAdapter.showSubBtn = it.state == 0 || it.state == -1
+            mAdapter.freightOrderStatus = it.state
+        })
+        viewModel.orders.observe(this, Observer {
+            mAdapter.data = it
         })
         viewModel.netResult.observe(this, Observer {
             if (it.success) {
@@ -61,6 +64,16 @@ class LoadingListActivity : AppCompatActivity() {
             } else {
                 if (it.api == Constants.SET_WAYBILL_OR_ORDER_STATUS) {
                     findViewById<Button>(R.id.loading_sub_btn).isEnabled = true
+                } else if (it.api == Constants.GET_ACT_WAY_BILL) {
+                    if (it.message.contains("Size")) {
+                        AlertDialog.Builder(this)
+                            .setMessage("暂无货单信息")
+                            .setPositiveButton("确定", DialogInterface.OnClickListener { dialog, which ->
+                                finish()
+                            })
+                            .create()
+                            .show()
+                    }
                 }
                 Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
             }
@@ -80,6 +93,7 @@ class LoadingListActivity : AppCompatActivity() {
 }
 
 class MyLoadingListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var freightOrderStatus = -1
     var showSubBtn = false
     var data = ArrayList<Order>()
         set(value) {
@@ -99,7 +113,7 @@ class MyLoadingListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == TYPE_FOOTER_VIEW) {
             val button = Button(parent.context)
-            button.text = "完成"
+            button.text = "确认"
             button.id = R.id.loading_sub_btn
             val layoutParams =
                 RecyclerView.LayoutParams(
@@ -125,7 +139,7 @@ class MyLoadingListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is MyViewHolder) {
-            holder.orderId.text = "订单号：".plus(data[position].id)
+            holder.orderId.text = "物流单号：".plus(data[position].shipmentNumber)
             holder.adress.text = "提货点：".plus(data[position].adress)
             var statusString =
                 when (data[position].shipState) {
@@ -142,11 +156,16 @@ class MyLoadingListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     else -> ""
                 }
             holder.status.text = statusString
-//            holder.mCheckBox.isChecked = data[position].haveOutbound
+//            holder.mCheckBox.isChecked = deliveryManData[position].haveOutbound
 //            holder.mCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
-//                data[position].haveOutbound = isChecked
+//                deliveryManData[position].haveOutbound = isChecked
 //            }
         } else if (holder is MyFooterHolder) {
+            holder.mBotton.text = when (freightOrderStatus) {
+                -1 -> "确认出库"
+                0 -> "确认配送"
+                else -> "确认"
+            }
             holder.mBotton.setOnClickListener {
                 (it.context as LoadingListActivity).onClick(it)
             }

@@ -23,7 +23,6 @@ import com.qinbang.quickrun.data.model.Waybill
 import com.qinbang.quickrun.net.ServiceCreator
 import com.qinbang.quickrun.ui.widget.LinearSpacesItemDecoration
 import com.qinbang.quickrun.utils.GlideImageLoaderForBanner
-import com.qinbang.quickrun.viewmodels.DeliveryManViewModle
 import com.qinbang.quickrun.viewmodels.MainViewModle
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
@@ -33,26 +32,25 @@ import kotlinx.android.synthetic.main.content_main.*
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     companion object {
-        lateinit var deliveryManViewModle: DeliveryManViewModle
+        lateinit var mainViewModle: MainViewModle
     }
 
-    private val viewModle by lazy { ViewModelProviders.of(this).get(MainViewModle::class.java) }
     private lateinit var historyTastListAdapter: HistoryTastListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        deliveryManViewModle = ViewModelProviders.of(this).get(DeliveryManViewModle::class.java)
+        mainViewModle = ViewModelProviders.of(this).get(MainViewModle::class.java)
 
-        if (deliveryManViewModle.data.value == null) {
+        if (mainViewModle.deliveryManData.value == null) {
             startActivity(Intent(this, LoginActivity::class.java))
         } else {
-            viewModle.getWaybillData()
+            mainViewModle.getWaybillData()
         }
 
         //用户信息更新
-        deliveryManViewModle.data.observe(this, Observer {
+        mainViewModle.deliveryManData.observe(this, Observer {
             if (it != null) {
                 nav_view.getHeaderView(0).findViewById<TextView>(R.id.name).text = it.realName
                 nav_view.getHeaderView(0).findViewById<TextView>(R.id.mobileNo).text = it.mobilePhone
@@ -60,15 +58,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Glide.with(this).load("${ServiceCreator.IMAGE_BASE_URL}${it.image[0]}")
                     .apply(RequestOptions.circleCropTransform()).into(userIcon)
 
-                viewModle.getWaybillData()
-            }else{
+                mainViewModle.getWaybillData()
+            } else {
                 nav_view.getHeaderView(0).findViewById<TextView>(R.id.name).text = ""
                 nav_view.getHeaderView(0).findViewById<TextView>(R.id.mobileNo).text = ""
                 val userIcon = nav_view.getHeaderView(0).findViewById<ImageView>(R.id.imageView)
                 Glide.with(this).load(R.mipmap.ic_launcher_round)
                     .apply(RequestOptions.circleCropTransform()).into(userIcon)
 
-                viewModle.getWaybillData()
+                mainViewModle.getWaybillData()
             }
         })
 
@@ -93,10 +91,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         recyclerView5.adapter = historyTastListAdapter
         recyclerView5.addItemDecoration(LinearSpacesItemDecoration())
 
-        viewModle.waybillLiveData.observe(this, Observer {
+        mainViewModle.waybillLiveData.observe(this, Observer {
             historyTastListAdapter.data = it
         })
-        viewModle.netResult.observe(this, Observer {
+        mainViewModle.netResult.observe(this, Observer {
             if (it.success) {
             } else {
                 Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
@@ -164,8 +162,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
+//        menuInflater.inflate(R.menu.main, menu)
+        return false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -181,8 +179,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_home -> {
-                // Handle the camera action
+            R.id.nav_phone_edit -> {
+                MobilePhoneChangeActivity.goIn(this)
             }
             R.id.nav_gallery -> {
 
@@ -190,7 +188,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_slideshow -> {
 
             }
-            R.id.nav_out_login->{
+            R.id.nav_out_login -> {
                 startActivity(Intent(this, LoginActivity::class.java))
             }
         }
