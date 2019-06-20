@@ -20,25 +20,23 @@
             tools:ignore="GoogleAppIndexingWarning"
             tools:targetApi="m">
         <activity
+                android:name=".ui.FreightBillListActivity"
+                android:label="@string/allocate_cargo_list">
+        </activity>
+        <activity
                 android:name=".ui.MobilePhoneChangeActivity"
-                android:screenOrientation="portrait"
-                android:label="@string/menu_phone_edit">
+                android:label="@string/menu_phone_edit"
+                android:screenOrientation="portrait">
         </activity>
         <activity
                 android:name=".ui.TransportRouteActivity"
                 android:label="@string/transport_route"
                 android:screenOrientation="portrait">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".ui.MainActivity"/>
         </activity>
         <activity
                 android:name=".ui.RiskReportingActivity"
                 android:label="@string/risk_reporting"
                 android:screenOrientation="portrait">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".ui.MainActivity"/>
         </activity>
         <activity
                 android:name=".ui.LossReportActivity"
@@ -49,17 +47,11 @@
                 android:name=".ui.LoadingListActivity"
                 android:label="@string/allocate_cargo_list"
                 android:screenOrientation="portrait">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".ui.MainActivity"/>
         </activity>
         <activity
                 android:name=".ui.DeliveryOrderDetailActivity"
                 android:label="货单详情"
                 android:screenOrientation="portrait">
-            <meta-data
-                    android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".ui.MainActivity"/>
         </activity>
         <activity
                 android:name=".ui.LoginActivity"

@@ -24,20 +24,20 @@ import java.util.Calendar;
  * 使用ksyStore加密工具类
  */
 
-public class EncryUtils {
-    static EncryUtils encryUtilsInstance;
+public class EncryUtil {
+    static EncryUtil encryUtilInstance;
     KeyStore keyStore;
 
-    public static EncryUtils getInstance() {
-        synchronized (EncryUtils.class) {
-            if (null == encryUtilsInstance) {
-                encryUtilsInstance = new EncryUtils();
+    public static EncryUtil getInstance() {
+        synchronized (EncryUtil.class) {
+            if (null == encryUtilInstance) {
+                encryUtilInstance = new EncryUtil();
             }
         }
-        return encryUtilsInstance;
+        return encryUtilInstance;
     }
 
-    public EncryUtils() {
+    public EncryUtil() {
 //        initKeyStore();
     }
 

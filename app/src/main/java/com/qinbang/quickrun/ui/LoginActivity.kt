@@ -24,11 +24,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        if (MainActivity.mainViewModle.deliveryManData.value!=null){
-            viewModel.loginOut()
-            MainActivity.mainViewModle.upData()
-        }
-
         mobileNo.afterTextChanged {
             viewModel.loginDataChanged(
                 mobileNo.text.toString(),
@@ -57,7 +52,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel.loginResult.observe(this, Observer {
             if (it.success) {
                 loading.visibility = View.GONE
-                MainActivity.mainViewModle.upData()
+                MainActivity.mainViewModle.updataDriverInfo()
                 finish()
             } else {
                 loading.visibility = View.GONE

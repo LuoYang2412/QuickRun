@@ -30,10 +30,6 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    fun loginOut() {
-        DeliveryManDataSource.clean()
-    }
-
     fun loginDataChanged(mobileNo: String, password: String) {
         if (!isMobileNo(mobileNo)) {
             inputSuccess.value = false

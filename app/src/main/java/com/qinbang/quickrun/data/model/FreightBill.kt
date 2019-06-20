@@ -1,9 +1,9 @@
 package com.qinbang.quickrun.data.model
 
 /**
- * 运单信息
+ * 运单
  */
-data class Waybill(
+data class FreightBill(
     val createDate: String,
     val id: String,
     val num: String,

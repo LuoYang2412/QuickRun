@@ -1,11 +1,19 @@
 package com.qinbang.quickrun.data.model
 
 /**
- * 运货单
+ * 订单
  */
 data class DeliveryOrder(
+    val adress: String,
+    val freightOrderId: String,
     val id: String,
-    val name: String,
-    val time: String,
-    val stations: ArrayList<Station>
+    val pickUpId: String,
+    val shipState: Int,
+    val shipmentNumber: String,
+    val warehouseAddress: String,
+    val warehouseCity: String,
+    val warehouseCountry: String,
+    val warehouseName: String,
+    val warehouseProvince: String,
+    val warehouseTown: String
 )

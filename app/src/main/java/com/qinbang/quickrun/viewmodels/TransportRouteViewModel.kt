@@ -6,86 +6,140 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
+import com.qinbang.quickrun.data.model.DeliveryOrder
 import com.qinbang.quickrun.data.model.Station
 import com.qinbang.quickrun.net.QuickRunNetwork
-import com.qinbang.quickrun.net.ResultOfView
 import com.qinbang.quickrun.ui.MainActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.Int as Int1
 
 class TransportRouteViewModel : ViewModel() {
-    val mGson by lazy { Gson() }
-    val netResult = MutableLiveData<ResultOfView>()
-    val stationsLiveData by lazy { MutableLiveData<ArrayList<Station>>() }
-    val currentStation = MutableLiveData<kotlin.Int>()
+    private val mGson by lazy { Gson() }
+    private var orders = ArrayList<DeliveryOrder>()
+    private var stations = ArrayList<Station>()
+    val getDataSuccess = MutableLiveData<Array<Boolean>>()
+    val stationsLiveData = MutableLiveData<ArrayList<Station>>()
+    val resultMsg = MutableLiveData<String>()
+    private val success = arrayOf(false, false)
+    var ingStationPosition = 0
+    var routesDone = false
     /**
-     * 获取运输路线
+     * 获取站点
      */
-    fun getRoute(freightOrderId: String) {
+    fun getStation(freightOrderId: String) {
         viewModelScope.launch {
             try {
-                netResult.value = withContext(Dispatchers.IO) {
+                withContext(Dispatchers.IO) {
                     val resource = QuickRunNetwork.getInstance()
-                        .app_route_getRoute(freightOrderId, MainActivity.mainViewModle.deliveryManData.value!!.uid)
+                        .app_route_getRoute(freightOrderId, MainActivity.mainViewModle.driver.value!!.uid)
                     if (resource.success) {
-                        val routeStr = resource.data!!["route"].asString
+                        val ingStation = resource.data!!["sort"].asInt
+                        val routeStr = resource.data["route"].asString
                         val routeJsO = mGson.fromJson(routeStr, JsonObject::class.java)
-                        stationsLiveData.postValue(
-                            mGson.fromJson(
-                                routeJsO["nodes"],
-                                object : TypeToken<ArrayList<Station>>() {}.type
-                            )
+                        val stations1 = mGson.fromJson<ArrayList<Station>>(
+                            routeJsO["nodes"],
+                            object : TypeToken<ArrayList<Station>>() {}.type
                         )
-                        currentStation.postValue(resource.data["sort"].asInt)
+                        when {
+                            ingStation < 0 -> ingStationPosition = 0
+                            ingStation > 0 && ingStation <= stations1.size -> ingStationPosition = ingStation - 1
+                            ingStation > stations1.size -> {
+                                routesDone = ingStation == 9999
+                                ingStationPosition = stations1.size - 1
+                            }
+                        }
+                        stations1.map {
+                            val sort = it.sort.toInt()
+                            when {
+                                sort < ingStation -> it.status = Station.StationStatus.ED
+                                sort == ingStation -> it.status = Station.StationStatus.ING
+                                sort > ingStation -> it.status = Station.StationStatus.WILL
+                            }
+                            it.deliveryOrders = ArrayList()
+                        }
+                        stations = stations1
+                        success[0] = true
+                        getDataSuccess.postValue(success)
+                    } else {
+                        resultMsg.postValue(resource.message)
                     }
-                    ResultOfView(resource.success, "${resource.message}")
                 }
             } catch (t: Throwable) {
-                netResult.value = ResultOfView(false, "${t.message}")
+                resultMsg.value = t.message
             }
         }
     }
 
-    fun getData() {
-//        val orders1 = ArrayList<Order>()
-//        orders1.add(Order("465123", true))
-//        orders1.add(Order("adsgewtq"))
-//        orders1.add(Order("fat45326", true))
-//        orders1.add(Order("465123", true))
-//        orders1.add(Order("adsgewtq"))
-//        orders1.add(Order("fat45326", true))
-//        orders1.add(Order("465123", true))
-//        orders1.add(Order("adsgewtq"))
-//        orders1.add(Order("fat45326", true))
-//        orders1.add(Order("465123", true))
-//        orders1.add(Order("adsgewtq"))
-//        orders1.add(Order("fat45326", true))
-//        val orders2 = ArrayList<Order>()
-//        orders2.add(Order("fat45326", true))
-//        orders2.add(Order("465123", true))
-//        orders2.add(Order("adsgewtq"))
-//        orders2.add(Order("fat45326", true))
-//        orders2.add(Order("adsgewtq"))
-//        orders2.add(Order("fat45326", true))
-//        orders2.add(Order("adsgewtq"))
-//        orders2.add(Order("fat45326", true))
-//        val station1 = Station("IDS11245435", "王宽站", Station.StationStatus.ED, orders1)
-//        val station2 = Station("879646", "花溪站", Station.StationStatus.ING, orders2)
-//        val station3 = Station("54542qy43", "三江口站", Station.StationStatus.WILL, orders1)
-//        val station4 = Station("4674897", "秦山站", Station.StationStatus.WILL, orders2)
-//        val stations = ArrayList<Station>()
-//        stations.add(station1)
-//        stations.add(station2)
-//        stations.add(station3)
-//        stations.add(station4)
-//        stations.add(station3)
-//        stations.add(station3)
-//        stations.add(station4)
-//        stations.add(station3)
-//        stations.add(station4)
-//        stations.add(station1)
-//        stationsLiveData.value = stations
+
+    /**
+     * 获取订单
+     * @param pickUpId 提货单ID ""表示所有提货点
+     */
+    fun getOrders(freightOrderId: String, pickUpId: String = "") {
+        viewModelScope.launch {
+            try {
+                withContext(Dispatchers.IO) {
+                    val resource = QuickRunNetwork.getInstance()
+                        .app_order_getAll(freightOrderId, "", MainActivity.mainViewModle.driver.value!!.uid)
+                    if (resource.success) {
+                        val orders1 = mGson.fromJson<ArrayList<DeliveryOrder>>(
+                            resource.data?.get("orderList"),
+                            object : TypeToken<ArrayList<DeliveryOrder>>() {}.type
+                        )
+                        orders = orders1
+                        success[1] = true
+                        getDataSuccess.postValue(success)
+                    } else {
+                        resultMsg.postValue(resource.message)
+                    }
+                }
+            } catch (t: Throwable) {
+                resultMsg.value = t.message
+            }
+        }
+    }
+
+
+    /**
+     * 修改运单状态
+     * @param pickUpId ""表示装货完成状态，有值表示提货点下货完成
+     */
+    fun setWaybillOrOrderStatus(freightOrderId: String, pickUpId: String) {
+        viewModelScope.launch {
+            try {
+                withContext(Dispatchers.IO) {
+                    val resource = QuickRunNetwork.getInstance().app_order_inDistribution(
+                        freightOrderId,
+                        pickUpId, MainActivity.mainViewModle.driver.value!!.uid
+                    )
+                    if (resource.success) {
+                        MainActivity.mainViewModle.getData()
+                    } else {
+                        resultMsg.postValue(resource.message)
+                    }
+                }
+            } catch (t: Throwable) {
+                resultMsg.value = t.message
+            }
+        }
+    }
+
+    fun getData(freightOrderId: String) {
+        success[0] = false
+        success[1] = false
+        getStation(freightOrderId)
+        getOrders(freightOrderId)
+    }
+
+    fun packageData() {
+        stations.map { station ->
+            orders.map { order ->
+                if (order.pickUpId == station.id) {
+                    station.deliveryOrders.add(order)
+                }
+            }
+        }
+        stationsLiveData.value = stations
     }
 }

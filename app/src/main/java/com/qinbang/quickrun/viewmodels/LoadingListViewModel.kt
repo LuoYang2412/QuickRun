@@ -5,42 +5,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.qinbang.quickrun.data.model.Order
-import com.qinbang.quickrun.data.model.Waybill
+import com.qinbang.quickrun.data.model.FreightBill
+import com.qinbang.quickrun.data.model.DeliveryOrder
 import com.qinbang.quickrun.net.QuickRunNetwork
-import com.qinbang.quickrun.net.ResultOfView
 import com.qinbang.quickrun.ui.MainActivity
-import com.qinbang.quickrun.utils.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class LoadingListViewModel : ViewModel() {
     val mGson by lazy { Gson() }
-    val netResult = MutableLiveData<ResultOfView>()
-    val orders = MutableLiveData<ArrayList<Order>>()
-    val activeWayBill = MutableLiveData<Waybill>()
-
-    /**
-     * 获取当前货运单
-     */
-    fun getActWayBill() {
-        viewModelScope.launch {
-            try {
-                netResult.value = withContext(Dispatchers.IO) {
-                    val resource = QuickRunNetwork.getInstance()
-                        .app_freightOrder_getAll("0", MainActivity.mainViewModle.deliveryManData.value!!.uid)
-                    if (resource.success) {
-                        val jsonElement = resource.data!!["freightOrderList"].asJsonArray[0]
-                        activeWayBill.postValue(mGson.fromJson<Waybill>(jsonElement, Waybill::class.java))
-                    }
-                    ResultOfView(resource.success, "".plus(resource.message))
-                }
-            } catch (t: Throwable) {
-                netResult.value = ResultOfView(false, "".plus(t.message), Constants.GET_ACT_WAY_BILL)
-            }
-        }
-    }
+    val resultMsg = MutableLiveData<String>()
+    val orders = MutableLiveData<ArrayList<DeliveryOrder>>()
 
     /**
      * 获取订单
@@ -49,41 +25,46 @@ class LoadingListViewModel : ViewModel() {
     fun getOrders(freightOrderId: String, pickUpId: String = "") {
         viewModelScope.launch {
             try {
-                netResult.value = withContext(Dispatchers.IO) {
+                withContext(Dispatchers.IO) {
                     val resource = QuickRunNetwork.getInstance()
-                        .app_order_getAll(freightOrderId, "", MainActivity.mainViewModle.deliveryManData.value!!.uid)
+                        .app_order_getAll(freightOrderId, "", MainActivity.mainViewModle.driver.value!!.uid)
                     if (resource.success) {
                         orders.postValue(
                             mGson.fromJson(
                                 resource.data?.get("orderList"),
-                                object : TypeToken<ArrayList<Order>>() {}.type
+                                object : TypeToken<ArrayList<DeliveryOrder>>() {}.type
                             )
                         )
+                    } else {
+                        resultMsg.postValue(resource.message)
                     }
-                    ResultOfView(resource.success, "".plus(resource.message))
                 }
             } catch (t: Throwable) {
-                netResult.value = ResultOfView(false, "".plus(t.message))
+                resultMsg.value = t.message
             }
         }
     }
 
     /**
-     * 修改订单状态
+     * 修改运单状态
      * @param pickUpId ""表示装货完成状态，有值表示提货点下货完成
      */
     fun setWaybillOrOrderStatus(freightOrderId: String, pickUpId: String = "") {
         viewModelScope.launch {
             try {
-                netResult.value = withContext(Dispatchers.IO) {
+                withContext(Dispatchers.IO) {
                     val resource = QuickRunNetwork.getInstance().app_order_inDistribution(
                         freightOrderId,
-                        pickUpId, MainActivity.mainViewModle.deliveryManData.value!!.uid
+                        pickUpId, MainActivity.mainViewModle.driver.value!!.uid
                     )
-                    ResultOfView(resource.success, "".plus(resource.message), Constants.SET_WAYBILL_OR_ORDER_STATUS)
+                    if (resource.success) {
+                        MainActivity.mainViewModle.getFreightBillUnDone()
+                    } else {
+                        resultMsg.postValue(resource.message)
+                    }
                 }
             } catch (t: Throwable) {
-                netResult.value = ResultOfView(false, "".plus(t.message), Constants.SET_WAYBILL_OR_ORDER_STATUS)
+                resultMsg.value = t.message
             }
         }
     }

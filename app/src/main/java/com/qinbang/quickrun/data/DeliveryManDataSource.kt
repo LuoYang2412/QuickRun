@@ -20,11 +20,11 @@ object DeliveryManDataSource {
     }
 
     private fun upData(deliveryManObject: DeliveryMan) {
-        clean()
+        clear()
         save(deliveryManObject)
     }
 
-    fun clean() {
+    fun clear() {
         mSharedPreferences.edit { clear() }
         deliveryMan = null
     }

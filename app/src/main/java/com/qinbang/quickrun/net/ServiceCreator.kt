@@ -1,11 +1,11 @@
 package com.qinbang.quickrun.net
 
-import android.util.Log
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import timber.log.Timber
 
 object ServiceCreator {
 
@@ -14,7 +14,7 @@ object ServiceCreator {
     const val IMAGE_BASE_URL = "${BASE_URL}upload/"
 
     private val httpClient = OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor {
-        Log.d("NetWork", it)
+        Timber.d(it)
     }.setLevel(HttpLoggingInterceptor.Level.BODY))
 
     private val builder = Retrofit.Builder()
