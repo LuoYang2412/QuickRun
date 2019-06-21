@@ -5,10 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.qinbang.quickrun.data.model.FreightBill
 import com.qinbang.quickrun.data.model.DeliveryOrder
 import com.qinbang.quickrun.net.QuickRunNetwork
-import com.qinbang.quickrun.ui.MainActivity
+import com.qinbang.quickrun.ui.MainActivity2
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -27,7 +26,7 @@ class LoadingListViewModel : ViewModel() {
             try {
                 withContext(Dispatchers.IO) {
                     val resource = QuickRunNetwork.getInstance()
-                        .app_order_getAll(freightOrderId, "", MainActivity.mainViewModle.driver.value!!.uid)
+                        .app_order_getAll(freightOrderId, "", MainActivity2.mainViewModle.driver.value!!.uid)
                     if (resource.success) {
                         orders.postValue(
                             mGson.fromJson(
@@ -55,10 +54,10 @@ class LoadingListViewModel : ViewModel() {
                 withContext(Dispatchers.IO) {
                     val resource = QuickRunNetwork.getInstance().app_order_inDistribution(
                         freightOrderId,
-                        pickUpId, MainActivity.mainViewModle.driver.value!!.uid
+                        pickUpId, MainActivity2.mainViewModle.driver.value!!.uid
                     )
                     if (resource.success) {
-                        MainActivity.mainViewModle.getFreightBillUnDone()
+                        MainActivity2.mainViewModle.getFreightBillUnDone()
                     } else {
                         resultMsg.postValue(resource.message)
                     }

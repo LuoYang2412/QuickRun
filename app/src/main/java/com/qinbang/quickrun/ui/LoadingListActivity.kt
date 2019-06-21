@@ -47,7 +47,7 @@ class LoadingListActivity : AppCompatActivity() {
 
         val freightsPosition = intent.getIntExtra("position", 0)
 
-        MainActivity.mainViewModle.freightBillUnDone.observe(this, Observer { freights ->
+        MainActivity2.mainViewModle.freightBillUnDone.observe(this, Observer { freights ->
             textView11.text = resources.getString(R.string.freight_id).plus(freights[freightsPosition].num)
             if (myLoadingListAdapter.footerLayoutCount == 0) {
                 val footerView = layoutInflater.inflate(R.layout.layout_radius_btn, recyclerView2, false)

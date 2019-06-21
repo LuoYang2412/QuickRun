@@ -52,7 +52,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel.loginResult.observe(this, Observer {
             if (it.success) {
                 loading.visibility = View.GONE
-                MainActivity.mainViewModle.updataDriverInfo()
+                MainActivity2.mainViewModle.updataDriverInfo()
                 finish()
             } else {
                 loading.visibility = View.GONE

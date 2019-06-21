@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +17,7 @@ import com.zhihu.matisse.Matisse
 import com.zhihu.matisse.MimeType
 import com.zhihu.matisse.internal.entity.CaptureStrategy
 import kotlinx.android.synthetic.main.activity_loss_report.*
+import timber.log.Timber
 
 /**
  * 损耗申报
@@ -67,7 +67,7 @@ class LossReportActivity : AppCompatActivity() {
                                 .showSingleMediaType(true)
                                 .forResult(Constants.REQUEST_CODE_CHOOSE)
                         } else {
-                            Log.d("tag=======", "权限被拒绝")
+                            Timber.d("权限被拒绝")
                         }
                     }
             }
@@ -87,9 +87,9 @@ class LossReportActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constants.REQUEST_CODE_CHOOSE && resultCode == Activity.RESULT_OK) {
             val obtainResult = Matisse.obtainResult(data)
-            Log.d("tag=======", obtainResult[0].toString())
+            Timber.d(obtainResult[0].toString())
         } else {
-            Log.d("tag========", "获取图片失败")
+            Timber.d("获取图片失败")
         }
     }
 }

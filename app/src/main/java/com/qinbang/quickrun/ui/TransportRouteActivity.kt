@@ -46,8 +46,8 @@ class TransportRouteActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val freightsPosition = intent.getIntExtra("position", 0)
-        freightOrderId = MainActivity.mainViewModle.freightBillUnDone.value?.get(freightsPosition)?.id ?: ""
-        freightOrderNum = MainActivity.mainViewModle.freightBillUnDone.value?.get(freightsPosition)?.num ?: ""
+        freightOrderId = MainActivity2.mainViewModle.freightBillUnDone.value?.get(freightsPosition)?.id ?: ""
+        freightOrderNum = MainActivity2.mainViewModle.freightBillUnDone.value?.get(freightsPosition)?.num ?: ""
 
         val orderListAdapter = DeliveryOrderListAdapter()
         orderListAdapter.isFirstOnly(false)
@@ -99,7 +99,7 @@ class TransportRouteActivity : AppCompatActivity() {
         }
         recyclerView3.adapter = stationListAdapter
 
-        MainActivity.mainViewModle.freightBillUnDone.observe(this, Observer {
+        MainActivity2.mainViewModle.freightBillUnDone.observe(this, Observer {
             viewModel.getData(freightOrderId)
         })
 

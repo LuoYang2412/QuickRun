@@ -36,7 +36,7 @@ class FreightBillListActivity : AppCompatActivity() {
 
         swipeRefreshLayout2.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN)
         swipeRefreshLayout2.setOnRefreshListener {
-            MainActivity.mainViewModle.getData()
+            MainActivity2.mainViewModle.getData()
             Handler().postDelayed({ swipeRefreshLayout2.isRefreshing = false }, 300)
         }
 
@@ -76,12 +76,12 @@ class FreightBillListActivity : AppCompatActivity() {
         recyclerView6.adapter = freightBillListAdapter
         recyclerView6.addItemDecoration(LinearSpacesItemDecoration())
 
-        MainActivity.mainViewModle.freightBillUnDone.observe(this, Observer {
+        MainActivity2.mainViewModle.freightBillUnDone.observe(this, Observer {
             if (tabLayout.selectedTabPosition == 0) {
                 setUnDonesData()
             }
         })
-        MainActivity.mainViewModle.freightBillDone.observe(this, Observer {
+        MainActivity2.mainViewModle.freightBillDone.observe(this, Observer {
             if (tabLayout.selectedTabPosition == 1) {
                 setDonesData()
             }
@@ -96,14 +96,14 @@ class FreightBillListActivity : AppCompatActivity() {
     }
 
     private fun setDonesData() {
-        val freightBillDones = MainActivity.mainViewModle.freightBillDone.value
+        val freightBillDones = MainActivity2.mainViewModle.freightBillDone.value
         if (freightBillDones != null) {
             freightBillListAdapter.replaceData(freightBillDones)
         }
     }
 
     private fun setUnDonesData() {
-        val freightBillUnDones = MainActivity.mainViewModle.freightBillUnDone.value
+        val freightBillUnDones = MainActivity2.mainViewModle.freightBillUnDone.value
         if (freightBillUnDones != null)
             freightBillListAdapter.replaceData(freightBillUnDones)
     }

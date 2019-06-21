@@ -64,7 +64,7 @@ class MainViewModle : ViewModel() {
             try {
                 withContext(Dispatchers.IO) {
                     val resource = QuickRunNetwork.getInstance()
-                        .app_freightOrder_getAll("1", MainActivity.mainViewModle.driver.value!!.uid)
+                        .app_freightOrder_getAll("1", driver.value!!.uid)
                     if (resource.success) {
                         val freightOrderList = resource.data!!["freightOrderList"]
                         val type = object : TypeToken<ArrayList<FreightBill>>() {}.type
@@ -91,7 +91,7 @@ class MainViewModle : ViewModel() {
             try {
                 withContext(Dispatchers.IO) {
                     val resource = QuickRunNetwork.getInstance()
-                        .app_freightOrder_getAll("0", MainActivity.mainViewModle.driver.value!!.uid)
+                        .app_freightOrder_getAll("0", driver.value!!.uid)
                     if (resource.success) {
                         val jsonElement = resource.data!!["freightOrderList"]
                         freightBillUnDone.postValue(
