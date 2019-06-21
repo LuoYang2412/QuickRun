@@ -8,16 +8,9 @@
     <string name="menu_delivery_task">送货记录</string>
     <string name="menu_risk_reports">报险记录</string>
     <string name="menu_loss">损耗记录</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
     <string name="title_activity_login">登录</string>
     <string name="prompt_mobileNo">手机号</string>
     <string name="prompt_password">密码</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
     <string name="completed_delivery_order">历史货单</string>
     <string name="allocate_cargo_list">配货清单</string>
     <string name="loss_report">损耗申报</string>
