@@ -55,4 +55,5 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.14.2'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
     implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation 'com.github.wangfeng19930909:DragFloatingActionButton:1.0.1'
 }

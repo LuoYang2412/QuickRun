@@ -46,10 +46,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
 
         //设置Banner
-        val arrayList = ArrayList<Int>()
-        arrayList.add(R.drawable.ic_menu_camera)
-        arrayList.add(R.drawable.ic_menu_send)
-        arrayList.add(R.drawable.ic_menu_manage)
+        val arrayList = ArrayList<String>()
+        arrayList.add("https://api.neweb.top/bing.php?type=future")
+        arrayList.add("https://api.neweb.top/bing.php?type=rand")
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
             .setImageLoader(GlideImageLoaderForBanner())
             .setImages(arrayList)
@@ -57,7 +56,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             .isAutoPlay(true)
             .setDelayTime(1500)
             .setOnBannerListener {
-                Timber.tag("tag=========").d("$it")
+                Timber.d("banner点击$it")
             }
             .start()
 
@@ -94,7 +93,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-
+        navView.itemIconTintList = null
         navView.setNavigationItemSelectedListener(this)
 
         mainViewModle = ViewModelProviders.of(this).get(MainViewModle::class.java)
@@ -146,7 +145,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 LossReportActivity.goIn(this)
             }
             R.id.imageView5 -> {
-                RiskReportingActivity.goIn(this)
+                RiskReportingActivity.goIn(this, "", "")
             }
         }
     }
@@ -175,11 +174,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_phone_edit -> {
+            R.id.nav_reset_phone -> {
                 MobilePhoneChangeActivity.goIn(this)
-            }
-            R.id.nav_gallery -> {
-
             }
             R.id.nav_slideshow -> {
 

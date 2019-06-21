@@ -3,35 +3,57 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-                android:id="@+id/nav_gallery"
-                android:icon="@drawable/ic_menu_gallery"
-                android:title="@string/menu_delivery_task"/>
-        <item
-                android:id="@+id/nav_slideshow"
-                android:icon="@drawable/ic_menu_slideshow"
-                android:title="@string/menu_risk_reports"/>
-    </group>
+    <item
+            android:id="@+id/nav_my_order"
+            android:icon="@drawable/ic_menu_my_order"
+            android:title="我的订单"
+            />
+    <item
+            android:id="@+id/nav_loss_report"
+            android:icon="@drawable/ic_menu_loss_record"
+            android:title="破损记录"
+            />
+    <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_menu_risk_report"
+            android:title="@string/menu_risk_reports"/>
+    <item
+            android:id="@+id/nav_performance_appraisal"
+            android:icon="@drawable/ic_menu_performance_appraisal"
+            android:title="绩效考核"
+            />
 
-    <item android:title="功能">
+    <item
+            android:title="设置"
+            android:icon="@drawable/ic_menu_set">
         <menu>
             <item
-                    android:id="@+id/nav_phone_edit"
-                    android:icon="@drawable/ic_menu_camera"
+                    android:id="@+id/nav_reset_phone"
+                    android:icon="@drawable/ic_menu_reset_phone"
                     android:title="@string/menu_phone_edit"/>
             <item
+                    android:id="@+id/nav_reset_passwore"
+                    android:icon="@drawable/ic_menu_reset_passowrd"
+                    android:title="修改密码"
+                    />
+            <item
                     android:id="@+id/nav_out_login"
-                    android:icon="@android:drawable/sym_call_outgoing"
+                    android:icon="@drawable/ic_menu_login_out"
                     android:title="登入/登出"/>
+        </menu>
+    </item>
+    <item android:title="其它">
+        <menu>
             <item
-                    android:id="@+id/nav_share"
-                    android:icon="@drawable/ic_menu_share"
-                    android:title="@string/menu_share"/>
+                    android:id="@+id/nav_nav_contact_the_customer_service"
+                    android:title="联系客服"
+                    android:icon="@drawable/ic_menu_contact_the_customer_service"
+                    />
             <item
-                    android:id="@+id/nav_send"
-                    android:icon="@drawable/ic_menu_send"
-                    android:title="@string/menu_send"/>
+                    android:id="@+id/nav_about"
+                    android:icon="@drawable/ic_about"
+                    android:title="关于"
+                    />
         </menu>
     </item>
 

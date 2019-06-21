@@ -49,7 +49,7 @@
                 />
 
         <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView40"
                 app:layout_constraintTop_toTopOf="@+id/textView39"
@@ -57,7 +57,11 @@
                 app:layout_constraintStart_toEndOf="@+id/textView39"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                tools:text="五指山"/>
+                tools:text="五指山"
+                app:layout_constraintEnd_toStartOf="@+id/button4"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:maxLines="2"/>
 
         <TextView
                 android:text="送达时间："
@@ -106,6 +110,19 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 tools:text="投递成功"/>
+
+        <Button
+                android:text="损耗申报"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button4"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@android:color/white"
+                android:drawableTop="@drawable/ic_loss_report_2"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

@@ -7,6 +7,7 @@ import com.qinbang.quickrun.data.model.DeliveryOrder
 
 class DeliveryOrderListAdapter :
     BaseQuickAdapter<DeliveryOrder, BaseViewHolder>(R.layout.layout_delivery_order_detail_list_item) {
+    var showLossReportBtn = false
     override fun convert(helper: BaseViewHolder, item: DeliveryOrder) {
         helper.setText(R.id.textView38, item.shipmentNumber)
             .setText(R.id.textView40, item.adress)
@@ -26,5 +27,7 @@ class DeliveryOrderListAdapter :
                     else -> ""
                 }
             )
+            .setVisible(R.id.button4, showLossReportBtn)
+            .addOnClickListener(R.id.button4)
     }
 }

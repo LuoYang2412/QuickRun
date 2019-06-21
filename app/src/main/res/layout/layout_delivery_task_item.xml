@@ -57,15 +57,16 @@
                 />
 
         <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/work_route_icon"
+                android:layout_width="80dp"
+                android:layout_height="0dp"
+                app:srcCompat="@drawable/ic_route"
                 app:layout_constraintStart_toStartOf="parent"
                 android:id="@+id/imageView13"
                 app:layout_constraintTop_toBottomOf="@+id/divider"
                 android:layout_marginTop="16dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"/>
+                android:layout_marginStart="8dp"
+                app:layout_constraintDimensionRatio="h,2:1"/>
 
         <TextView
                 android:layout_width="0dp"

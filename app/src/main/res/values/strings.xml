@@ -19,7 +19,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="completed_delivery_order">历史货单</string>
-    <string name="allocate_cargo_list">装货清单</string>
+    <string name="allocate_cargo_list">配货清单</string>
     <string name="loss_report">损耗申报</string>
     <string name="risk_reporting">紧急报险</string>
     <string name="transport_route">送货路线</string>

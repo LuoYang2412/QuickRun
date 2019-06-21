@@ -41,10 +41,8 @@ class LossReportActivity : AppCompatActivity() {
 
         val orderId = intent.getStringExtra("orderId")
         val shipmentNumber = intent.getStringExtra("shipmentNumber")
-        if (shipmentNumber != null) {
-            editText.setText(shipmentNumber)
-            editText.isEnabled = false
-        }
+
+        editText.setText(shipmentNumber)
     }
 
     private val REQUEST_CODE_CHOOSE = 101

@@ -5,10 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.qinbang.quickrun.R
-import com.qinbang.quickrun.viewmodels.LoadingListViewModel
 import kotlinx.android.synthetic.main.activity_risk_reporting.*
 
 /**
@@ -17,8 +14,11 @@ import kotlinx.android.synthetic.main.activity_risk_reporting.*
 class RiskReportingActivity : AppCompatActivity() {
 
     companion object {
-        fun goIn(context: Context) {
-            context.startActivity(Intent(context, RiskReportingActivity::class.java))
+        fun goIn(context: Context, freightOrderId: String, freightOrderNum: String) {
+            val intent = Intent(context, RiskReportingActivity::class.java)
+            intent.putExtra("freightOrderId", freightOrderId)
+            intent.putExtra("freightOrderNum", freightOrderNum)
+            context.startActivity(intent)
         }
     }
 
@@ -28,9 +28,7 @@ class RiskReportingActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        MainActivity.mainViewModle.freightBillUnDone.observe(this, Observer {
-            editText3.setText(it[0].num)
-        })
+        editText3.setText(intent.getStringExtra("freightOrderNum"))
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

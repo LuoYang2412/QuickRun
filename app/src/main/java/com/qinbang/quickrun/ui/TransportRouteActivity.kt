@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -35,6 +36,8 @@ class TransportRouteActivity : AppCompatActivity() {
     }
 
     val viewModel by lazy { ViewModelProviders.of(this).get(TransportRouteViewModel::class.java) }
+    lateinit var freightOrderNum: String
+    lateinit var freightOrderId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,12 +46,19 @@ class TransportRouteActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val freightsPosition = intent.getIntExtra("position", 0)
-        val freightOrderId = MainActivity.mainViewModle.freightBillUnDone.value?.get(freightsPosition)!!.id
+        freightOrderId = MainActivity.mainViewModle.freightBillUnDone.value?.get(freightsPosition)?.id ?: ""
+        freightOrderNum = MainActivity.mainViewModle.freightBillUnDone.value?.get(freightsPosition)?.num ?: ""
 
         val orderListAdapter = DeliveryOrderListAdapter()
         orderListAdapter.isFirstOnly(false)
         orderListAdapter.openLoadAnimation()
         orderListAdapter.setEmptyView(R.layout.layout_list_empty_view, recyclerView4)
+        orderListAdapter.setOnItemChildClickListener { adapter, view, position ->
+            val deliveryOrder = (adapter as DeliveryOrderListAdapter).data[position]
+            val shipmentNumber = deliveryOrder.shipmentNumber ?: ""
+            val id = deliveryOrder.id ?: ""
+            LossReportActivity.goIn(this, id, shipmentNumber)
+        }
         recyclerView4.adapter = orderListAdapter
         recyclerView4.addItemDecoration(LinearSpacesItemDecoration(24))
 
@@ -60,6 +70,7 @@ class TransportRouteActivity : AppCompatActivity() {
             when {
                 //当前站点，添加“确认送达”按钮
                 station.status == Station.StationStatus.ING -> {
+                    orderListAdapter.showLossReportBtn = true
                     if (orderListAdapter.footerLayoutCount == 0) {
                         val footerView = layoutInflater.inflate(R.layout.layout_radius_btn, recyclerView4, false)
                         orderListAdapter.addFooterView(footerView)
@@ -81,6 +92,7 @@ class TransportRouteActivity : AppCompatActivity() {
                 }
                 //不是当前站点，异常“确认送达”按钮
                 (station.status == Station.StationStatus.ED || station.status == Station.StationStatus.WILL) && orderListAdapter.footerLayoutCount == 1 -> {
+                    orderListAdapter.showLossReportBtn = false
                     orderListAdapter.removeAllFooterView()
                 }
             }
@@ -121,6 +133,14 @@ class TransportRouteActivity : AppCompatActivity() {
             ToastUtil.show(this, it)
         })
 
+    }
+
+    fun onClick(view: View) {
+        when (view.id) {
+            R.id.dragFloatActionButton -> {
+                RiskReportingActivity.goIn(this, freightOrderId, freightOrderNum)
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

@@ -2,7 +2,6 @@ package com.qinbang.quickrun.ui.adapters
 
 import android.view.View
 import android.widget.ImageView
-import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.qinbang.quickrun.R
@@ -16,18 +15,18 @@ class StationListAdapter : BaseQuickAdapter<Station, BaseViewHolder>(
         val ingIcon = helper?.getView<ImageView>(R.id.imageView14)
         when (item!!.status) {
             Station.StationStatus.WILL -> {
-//                Glide.with(mContext).load(R.drawable.nonono).into(stationStatusIcon!!)
-                stationStatusIcon?.setImageResource(R.drawable.nonono)
+//                Glide.with(mContext).load(R.drawable.ic_station_will).into(stationStatusIcon!!)
+                stationStatusIcon?.setImageResource(R.drawable.ic_station_will)
                 ingIcon!!.visibility = View.INVISIBLE
             }
             Station.StationStatus.ING -> {
-//                Glide.with(mContext).load(R.drawable.inging).into(stationStatusIcon!!)
-                stationStatusIcon?.setImageResource(R.drawable.inging)
+//                Glide.with(mContext).load(R.drawable.ic_station_ing).into(stationStatusIcon!!)
+                stationStatusIcon?.setImageResource(R.drawable.ic_station_ing)
                 ingIcon!!.visibility = View.VISIBLE
             }
             Station.StationStatus.ED -> {
-//                Glide.with(mContext).load(R.drawable.okokok).into(stationStatusIcon!!)
-                stationStatusIcon?.setImageResource(R.drawable.okokok)
+//                Glide.with(mContext).load(R.drawable.ic_station_ed).into(stationStatusIcon!!)
+                stationStatusIcon?.setImageResource(R.drawable.ic_station_ed)
                 ingIcon!!.visibility = View.INVISIBLE
             }
         }

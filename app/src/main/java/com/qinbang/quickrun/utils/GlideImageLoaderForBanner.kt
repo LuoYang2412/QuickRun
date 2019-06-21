@@ -10,7 +10,7 @@ import com.youth.banner.loader.ImageLoader
  */
 class GlideImageLoaderForBanner : ImageLoader() {
     override fun displayImage(context: Context?, path: Any?, imageView: ImageView?) {
-        imageView!!.scaleType = ImageView.ScaleType.FIT_CENTER
+        imageView!!.scaleType = ImageView.ScaleType.MATRIX
         Glide.with(context!!).load(path).into(imageView)
     }
 
