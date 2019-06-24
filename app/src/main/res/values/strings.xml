@@ -4,7 +4,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_phone_edit">手机号码修改</string>
+    <string name="menu_phone_edit">修改手机号</string>
     <string name="menu_delivery_task">送货记录</string>
     <string name="menu_risk_reports">报险记录</string>
     <string name="menu_loss">损耗记录</string>
@@ -20,4 +20,5 @@
     <string name="freight_id">货运单号：</string>
     <string name="un_done">未完成</string>
     <string name="done">已完成</string>
+    <string name="reset_password">修改密码</string>
 </resources>

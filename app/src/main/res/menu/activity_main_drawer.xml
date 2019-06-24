@@ -32,9 +32,9 @@
                     android:icon="@drawable/ic_menu_reset_phone"
                     android:title="@string/menu_phone_edit"/>
             <item
-                    android:id="@+id/nav_reset_passwore"
+                    android:id="@+id/nav_reset_password"
                     android:icon="@drawable/ic_menu_reset_passowrd"
-                    android:title="修改密码"
+                    android:title="@string/reset_password"
                     />
             <item
                     android:id="@+id/nav_out_login"

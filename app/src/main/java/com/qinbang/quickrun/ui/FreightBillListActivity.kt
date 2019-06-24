@@ -37,7 +37,7 @@ class FreightBillListActivity : AppCompatActivity() {
         swipeRefreshLayout2.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN)
         swipeRefreshLayout2.setOnRefreshListener {
             MainActivity2.mainViewModle.getData()
-            Handler().postDelayed({ swipeRefreshLayout2.isRefreshing = false }, 300)
+            Handler().postDelayed({ swipeRefreshLayout2.isRefreshing = false }, 500)
         }
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.BaseOnTabSelectedListener<TabLayout.Tab> {

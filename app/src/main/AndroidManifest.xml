@@ -20,6 +20,12 @@
             tools:ignore="GoogleAppIndexingWarning"
             tools:targetApi="m">
         <activity
+                android:name=".ui.ResetPasswordActivity"
+                android:label="@string/menu_phone_edit"
+                android:screenOrientation="portrait"
+                >
+        </activity>
+        <activity
                 android:name=".ui.MainActivity2"
                 android:label="@string/app_name"
                 android:screenOrientation="portrait"
@@ -35,7 +41,7 @@
                 android:label="@string/allocate_cargo_list">
         </activity>
         <activity
-                android:name=".ui.MobilePhoneChangeActivity"
+                android:name=".ui.ResetPhoneActivity"
                 android:label="@string/menu_phone_edit"
                 android:screenOrientation="portrait">
         </activity>

@@ -1,5 +1,7 @@
 package com.qinbang.quickrun.ui
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -17,6 +19,12 @@ import kotlinx.android.synthetic.main.activity_login.*
  * 登录
  */
 class LoginActivity : AppCompatActivity() {
+
+    companion object {
+        fun goIn(context: Context) {
+            context.startActivity(Intent(context, LoginActivity::class.java))
+        }
+    }
 
     private val viewModel by lazy { ViewModelProviders.of(this).get(LoginViewModel::class.java) }
 
@@ -56,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
                 finish()
             } else {
                 loading.visibility = View.GONE
-                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
             }
         })
     }

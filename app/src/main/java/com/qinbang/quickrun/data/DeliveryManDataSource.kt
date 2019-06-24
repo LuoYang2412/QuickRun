@@ -1,6 +1,7 @@
 package com.qinbang.quickrun.data
 
 import android.preference.PreferenceManager
+import androidx.annotation.Keep
 import androidx.core.content.edit
 import com.google.gson.Gson
 import com.qinbang.quickrun.QuickRunApplication

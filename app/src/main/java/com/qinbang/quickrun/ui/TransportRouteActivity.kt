@@ -126,7 +126,7 @@ class TransportRouteActivity : AppCompatActivity() {
                 )
                 //点击当前站点
                 recyclerView3.findViewHolderForAdapterPosition(viewModel.ingStationPosition)?.itemView?.performClick()
-            }, 200)
+            }, 500)
         })
 
         viewModel.resultMsg.observe(this, Observer {

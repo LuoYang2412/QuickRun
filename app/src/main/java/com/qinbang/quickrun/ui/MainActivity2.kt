@@ -1,6 +1,5 @@
 package com.qinbang.quickrun.ui
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -77,8 +76,10 @@ class MainActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         swipeRefreshLayout2.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN)
         swipeRefreshLayout2.setOnRefreshListener {
-            mainViewModle.getData()
-            Handler().postDelayed({ swipeRefreshLayout2.isRefreshing = false }, 300)
+            if (mainViewModle.logined()) {
+                mainViewModle.getData()
+            }
+            Handler().postDelayed({ swipeRefreshLayout2.isRefreshing = false }, 500)
         }
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.BaseOnTabSelectedListener<TabLayout.Tab> {
@@ -118,6 +119,7 @@ class MainActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         recyclerView6.addItemDecoration(LinearSpacesItemDecoration())
 
         mainViewModle = ViewModelProviders.of(this).get(MainViewModle::class.java)
+        mainViewModle.logined()
         //用户信息
         mainViewModle.driver.observe(this, Observer {
             if (it != null) {
@@ -134,7 +136,6 @@ class MainActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 val userIcon = nav_view.getHeaderView(0).findViewById<ImageView>(R.id.imageView)
                 Glide.with(this).load(R.mipmap.ic_launcher_round)
                     .apply(RequestOptions.circleCropTransform()).into(userIcon)
-                startActivity(Intent(this, LoginActivity::class.java))
             }
         })
 
@@ -150,20 +151,33 @@ class MainActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         })
         //错误信息
         mainViewModle.errorMsg.observe(this, Observer {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            when {
+                it == null -> return@Observer
+                it == "未登录" -> LoginActivity.goIn(this)
+                else -> Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            }
         })
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_reset_phone -> {
-                MobilePhoneChangeActivity.goIn(this)
-            }
             R.id.nav_slideshow -> {
 
             }
+            R.id.nav_reset_phone -> {
+                if (mainViewModle.logined()) {
+                    ResetPhoneActivity.goIn(this)
+                }
+            }
+            R.id.nav_reset_password -> {
+                if (mainViewModle.logined()) {
+                    ResetPasswordActivity.goIn(this)
+                }
+            }
             R.id.nav_out_login -> {
-                MainActivity2.mainViewModle.clearDriverInfo()
+                if (mainViewModle.logined()) {
+                    MainActivity2.mainViewModle.loginOut()
+                }
             }
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)

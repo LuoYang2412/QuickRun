@@ -47,14 +47,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //设置Banner
         val arrayList = ArrayList<String>()
-        arrayList.add("https://api.neweb.top/bing.php?type=future")
         arrayList.add("https://api.neweb.top/bing.php?type=rand")
+        arrayList.add("https://api.neweb.top/bing.php?type=future")
+        arrayList.add("https://api.neweb.top/bing.php")
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
             .setImageLoader(GlideImageLoaderForBanner())
             .setImages(arrayList)
             .setBannerAnimation(Transformer.DepthPage)
             .isAutoPlay(true)
-            .setDelayTime(1500)
+            .setDelayTime(3000)
             .setOnBannerListener {
                 Timber.d("banner点击$it")
             }
@@ -78,7 +79,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         swipeRefreshLayout1.setColorSchemeColors(Color.RED, Color.BLUE, Color.GREEN)
         swipeRefreshLayout1.setOnRefreshListener {
             mainViewModle.getData()
-            Handler().postDelayed({ swipeRefreshLayout1.isRefreshing = false }, 300)
+            Handler().postDelayed({ swipeRefreshLayout1.isRefreshing = false }, 500)
         }
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -174,14 +175,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_reset_phone -> {
-                MobilePhoneChangeActivity.goIn(this)
-            }
             R.id.nav_slideshow -> {
 
             }
+            R.id.nav_reset_phone -> {
+                ResetPhoneActivity.goIn(this)
+            }
+            R.id.nav_reset_password -> {
+                ResetPasswordActivity.goIn(this)
+            }
             R.id.nav_out_login -> {
-                mainViewModle.clearDriverInfo()
+                mainViewModle.loginOut()
             }
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)

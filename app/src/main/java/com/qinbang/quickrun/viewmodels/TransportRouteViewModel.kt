@@ -1,5 +1,7 @@
 package com.qinbang.quickrun.viewmodels
 
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -114,7 +116,7 @@ class TransportRouteViewModel : ViewModel() {
                         pickUpId, MainActivity2.mainViewModle.driver.value!!.uid
                     )
                     if (resource.success) {
-                        MainActivity2.mainViewModle.getData()
+                        Handler(Looper.getMainLooper()).post { MainActivity2.mainViewModle.getData() }
                     } else {
                         resultMsg.postValue(resource.message)
                     }

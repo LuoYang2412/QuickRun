@@ -10,7 +10,6 @@ import com.qinbang.quickrun.data.model.DeliveryMan
 import com.qinbang.quickrun.data.model.FreightBill
 import com.qinbang.quickrun.net.QuickRunNetwork
 import com.qinbang.quickrun.net.ResultOfView
-import com.qinbang.quickrun.ui.MainActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -46,9 +45,14 @@ class MainViewModle : ViewModel() {
     /**
      * 清除司机
      */
-    fun clearDriverInfo() {
+    private fun clearDriverInfo() {
         DeliveryManDataSource.clear()
         updataDriverInfo()
+    }
+
+    fun loginOut() {
+        clearDriverInfo()
+        logined()
     }
 
     /**
@@ -109,12 +113,18 @@ class MainViewModle : ViewModel() {
         }
     }
 
-    fun getData(){
+    fun getData() {
         getFreightBillDone()
         getFreightBillUnDone()
     }
-    //登录
-    fun logined() = driver.value == null
+
+    //登录状态
+    fun logined(): Boolean {
+        if (driver.value == null) {
+            errorMsg.postValue("未登录")
+        }
+        return driver.value != null
+    }
 
     //有未完成货单
     fun haveFreightBillUnDone() = freightBillUnDone.value != null && freightBillUnDone.value!!.size > 0
