@@ -9,7 +9,6 @@ import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.qinbang.quickrun.R
@@ -21,7 +20,7 @@ import timber.log.Timber
 /**
  * 手机号码修改
  */
-class ResetPhoneActivity : AppCompatActivity() {
+class ResetPhoneActivity : BaseActivity() {
     companion object {
         fun goIn(context: Context) {
             context.startActivity(Intent(context, ResetPhoneActivity::class.java))
@@ -62,7 +61,7 @@ class ResetPhoneActivity : AppCompatActivity() {
                 it == "修改手机号成功" -> finish()
                 else -> {
                     Timber.d(it)
-                    ToastUtil.show(this, it)
+                    ToastUtil.show(it)
                 }
             }
         })

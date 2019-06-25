@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayout
 import com.qinbang.quickrun.R
@@ -19,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_freight_bill_list.*
 /**
  * 运输单列表
  */
-class FreightBillListActivity : AppCompatActivity() {
+class FreightBillListActivity : BaseActivity() {
     companion object {
         fun goIn(context: Context) {
             context.startActivity(Intent(context, FreightBillListActivity::class.java))
@@ -69,7 +68,7 @@ class FreightBillListActivity : AppCompatActivity() {
             when (freightBill.state) {
                 -1, 0 -> LoadingListActivity.goIn(this, position)
                 1 -> TransportRouteActivity.goIn(this, position)
-                2 -> ToastUtil.show(this, "这个货运单已删除")
+                2 -> ToastUtil.show("这个货运单已删除")
                 3 -> DeliveryOrderDetailActivity.goIn(this, freightBill.id, freightBill.num)
             }
         }

@@ -7,18 +7,17 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.qinbang.quickrun.R
+import com.qinbang.quickrun.utils.ToastUtil
 import com.qinbang.quickrun.viewmodels.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 
 /**
  * 登录
  */
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
 
     companion object {
         fun goIn(context: Context) {
@@ -64,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
                 finish()
             } else {
                 loading.visibility = View.GONE
-//                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                ToastUtil.show(it.message)
             }
         })
     }

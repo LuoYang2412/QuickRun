@@ -8,7 +8,6 @@ import android.os.Handler
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -26,7 +25,7 @@ import kotlinx.android.synthetic.main.activity_transport_route.*
 /**
  * 送货路线
  */
-class TransportRouteActivity : AppCompatActivity() {
+class TransportRouteActivity : BaseActivity() {
     companion object {
         fun goIn(context: Context, position: Int) {
             val intent = Intent(context, TransportRouteActivity::class.java)
@@ -112,9 +111,13 @@ class TransportRouteActivity : AppCompatActivity() {
 
         viewModel.stationsLiveData.observe(this, Observer {
             if (viewModel.routesDone) {
-                AlertDialogUtil.show(this, "物流单已全部送达", "确定", DialogInterface.OnClickListener { dialog, which ->
-                    finish()
-                })
+                AlertDialogUtil.show(
+                    "物流单已全部送达",
+                    "确定",
+                    true,
+                    DialogInterface.OnClickListener { dialog, which ->
+                        finish()
+                    })
                 return@Observer
             }
             stationListAdapter.replaceData(it)
@@ -130,7 +133,7 @@ class TransportRouteActivity : AppCompatActivity() {
         })
 
         viewModel.resultMsg.observe(this, Observer {
-            ToastUtil.show(this, it)
+            ToastUtil.show(it)
         })
 
     }

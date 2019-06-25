@@ -4,14 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import com.qinbang.quickrun.R
 import kotlinx.android.synthetic.main.activity_risk_reporting.*
 
 /**
  * 紧急报险
  */
-class RiskReportingActivity : AppCompatActivity() {
+class RiskReportingActivity : BaseActivity() {
 
     companion object {
         fun goIn(context: Context, freightOrderId: String, freightOrderNum: String) {

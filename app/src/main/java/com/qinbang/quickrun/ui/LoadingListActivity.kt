@@ -7,7 +7,6 @@ import android.os.Handler
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -21,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_loading_list.*
 /**
  * 装货清单
  */
-class LoadingListActivity : AppCompatActivity() {
+class LoadingListActivity : BaseActivity() {
 
     companion object {
         fun goIn(context: Context, position: Int) {
@@ -79,7 +78,7 @@ class LoadingListActivity : AppCompatActivity() {
         })
 
         viewModel.resultMsg.observe(this, Observer {
-            ToastUtil.show(this, it)
+            ToastUtil.show(it)
         })
 
     }

@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -33,7 +32,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import timber.log.Timber
 
-class MainActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity2 : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
     companion object {
         lateinit var mainViewModle: MainViewModle
     }
@@ -111,7 +110,7 @@ class MainActivity2 : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             when (freightBill.state) {
                 -1, 0 -> LoadingListActivity.goIn(this, position)
                 1 -> TransportRouteActivity.goIn(this, position)
-                2 -> ToastUtil.show(this, "这个货运单已删除")
+                2 -> ToastUtil.show("这个货运单已删除")
                 3 -> DeliveryOrderDetailActivity.goIn(this, freightBill.id, freightBill.num)
             }
         }

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.qinbang.quickrun.R
@@ -17,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_delivery_order_detail.*
 /**
  * 货单详情
  */
-class DeliveryOrderDetailActivity : AppCompatActivity() {
+class DeliveryOrderDetailActivity : BaseActivity() {
 
     companion object {
         fun goIn(context: Context, id: String, num: String) {

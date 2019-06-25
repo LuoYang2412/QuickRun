@@ -31,7 +31,7 @@
             app:layout_constraintTop_toBottomOf="@+id/recyclerView3"
             app:layout_constraintEnd_toEndOf="parent"
             android:textColor="@android:color/white"
-            android:background="@color/colorPrimary"
+            android:background="@color/color_008577"
             android:paddingStart="8dp"/>
 
     <ImageView

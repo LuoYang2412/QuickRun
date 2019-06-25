@@ -8,7 +8,6 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import com.qinbang.quickrun.R
 import com.qinbang.quickrun.utils.Constants
 import com.qinbang.quickrun.utils.Glide4Engine
@@ -22,7 +21,7 @@ import timber.log.Timber
 /**
  * 损耗申报
  */
-class LossReportActivity : AppCompatActivity() {
+class LossReportActivity : BaseActivity() {
 
     companion object {
         fun goIn(context: Context, orderId: String? = null, shipmentNumber: String = "") {

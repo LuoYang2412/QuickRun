@@ -38,7 +38,7 @@
                 android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:id="@+id/textView26"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/color_008577"
                 tools:text="已完成"/>
 
         <View
@@ -82,7 +82,7 @@
                 android:layout_marginRight="8dp"
                 tools:text="南海分库"
                 android:gravity="center"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/color_008577"
                 android:textSize="18sp"/>
 
         <View

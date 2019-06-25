@@ -8,7 +8,6 @@ import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.qinbang.quickrun.R
@@ -17,7 +16,7 @@ import com.qinbang.quickrun.viewmodels.ResetPasswordViewModel
 import kotlinx.android.synthetic.main.activity_reset_password.*
 import timber.log.Timber
 
-class ResetPasswordActivity : AppCompatActivity() {
+class ResetPasswordActivity : BaseActivity() {
 
     companion object {
         fun goIn(context: Context) {
@@ -74,7 +73,7 @@ class ResetPasswordActivity : AppCompatActivity() {
             when {
                 it == "密码修改成功" -> finish()
                 else -> {
-                    ToastUtil.show(this, it)
+                    ToastUtil.show(it)
                     Timber.d(it)
                 }
             }
