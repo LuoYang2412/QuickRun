@@ -3,7 +3,7 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:showIn="navigation_view">
 
-    <item
+    <!--<item
             android:id="@+id/nav_my_order"
             android:icon="@drawable/ic_menu_my_order"
             android:title="我的订单"
@@ -21,10 +21,10 @@
             android:id="@+id/nav_performance_appraisal"
             android:icon="@drawable/ic_menu_performance_appraisal"
             android:title="绩效考核"
-            />
+            />-->
 
     <item
-            android:title="设置"
+            android:title="@string/setting"
             android:icon="@drawable/ic_menu_set">
         <menu>
             <item
@@ -42,7 +42,7 @@
                     android:title="登入/登出"/>
         </menu>
     </item>
-    <item android:title="其它">
+    <!--<item android:title="其它">
         <menu>
             <item
                     android:id="@+id/nav_nav_contact_the_customer_service"
@@ -55,6 +55,6 @@
                     android:title="关于"
                     />
         </menu>
-    </item>
+    </item>-->
 
 </menu>

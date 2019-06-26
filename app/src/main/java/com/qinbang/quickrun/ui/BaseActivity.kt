@@ -6,13 +6,20 @@ import androidx.appcompat.app.AppCompatActivity
 import com.qinbang.quickrun.QuickRunApplication
 import com.qinbang.quickrun.utils.AlertDialogUtil
 import com.qinbang.quickrun.utils.Android_ID_Utils
+import com.qinbang.quickrun.utils.ToastUtil
 
 open class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         QuickRunApplication.application.addActivity(this)
+        initUtil()
         checkVM()
+    }
+
+    private fun initUtil() {
+        ToastUtil.init(this)
+        AlertDialogUtil.init(this)
     }
 
     override fun onDestroy() {

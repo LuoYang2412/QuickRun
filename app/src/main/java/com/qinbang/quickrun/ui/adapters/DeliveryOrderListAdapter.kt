@@ -27,7 +27,7 @@ class DeliveryOrderListAdapter :
                     else -> ""
                 }
             )
-            .setVisible(R.id.button4, showLossReportBtn)
+            .setGone(R.id.button4, showLossReportBtn)
             .addOnClickListener(R.id.button4)
     }
 }

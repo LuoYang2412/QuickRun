@@ -41,7 +41,5 @@ class QuickRunApplication : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
-        ToastUtil.init(this)
-        AlertDialogUtil.init(this)
     }
 }

@@ -160,9 +160,6 @@ class MainActivity2 : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_slideshow -> {
-
-            }
             R.id.nav_reset_phone -> {
                 if (mainViewModle.logined()) {
                     ResetPhoneActivity.goIn(this)
