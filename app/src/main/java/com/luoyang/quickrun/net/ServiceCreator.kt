@@ -9,9 +9,7 @@ import timber.log.Timber
 
 object ServiceCreator {
 
-    //        private const val BASE_URL = "https://www.easy-mock.com/mock/5bf25d3c34392218c898a66b/QuickRun/"
-//    private const val BASE_URL = "https://twms.qbftt.com/"//测试服
-    private const val BASE_URL = "http://192.168.3.237:8081/"
+        private const val BASE_URL = "https://www.easy-mock.com/mock/5bf25d3c34392218c898a66b/QuickRun/"
 
     const val IMAGE_BASE_URL = "${BASE_URL}upload/"
 
