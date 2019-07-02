@@ -70,6 +70,6 @@
       <init>(...);
  }
 
- -keep class com.qinbang.quickrun.data.**{*;}
- -keep class com.qinbang.quickrun.net.**{*;}
- -keep class com.qinbang.quickrun.utils.**{*;}
+ -keep class com.luoyang.quickrun.data.**{*;}
+ -keep class com.luoyang.quickrun.net.**{*;}
+ -keep class com.luoyang.quickrun.utils.**{*;}
