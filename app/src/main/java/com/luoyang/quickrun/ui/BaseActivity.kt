@@ -7,6 +7,7 @@ import com.luoyang.quickrun.QuickRunApplication
 import com.luoyang.quickrun.utils.AlertDialogUtil
 import com.luoyang.quickrun.utils.Android_ID_Utils
 import com.luoyang.quickrun.utils.ToastUtil
+import timber.log.Timber
 
 open class BaseActivity : AppCompatActivity() {
 
@@ -40,5 +41,10 @@ open class BaseActivity : AppCompatActivity() {
                 })
             return
         }
+    }
+
+    protected fun showToast(msg: String) {
+        Timber.d(msg)
+        ToastUtil.show(msg)
     }
 }

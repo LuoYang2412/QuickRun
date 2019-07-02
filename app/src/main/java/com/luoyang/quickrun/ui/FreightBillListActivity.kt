@@ -12,7 +12,6 @@ import com.luoyang.quickrun.R
 import com.luoyang.quickrun.data.model.FreightBill
 import com.luoyang.quickrun.ui.adapters.FreightBillListAdapter
 import com.luoyang.quickrun.ui.widget.LinearSpacesItemDecoration
-import com.luoyang.quickrun.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_freight_bill_list.*
 
 /**
@@ -68,7 +67,7 @@ class FreightBillListActivity : BaseActivity() {
             when (freightBill.state) {
                 -1, 0 -> LoadingListActivity.goIn(this, position)
                 1 -> TransportRouteActivity.goIn(this, position)
-                2 -> ToastUtil.show("这个货运单已删除")
+                2 -> showToast("这个货运单已删除")
                 3 -> DeliveryOrderDetailActivity.goIn(this, freightBill.id, freightBill.num)
             }
         }

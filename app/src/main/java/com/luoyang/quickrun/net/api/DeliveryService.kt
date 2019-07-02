@@ -49,25 +49,4 @@ interface DeliveryService {
         @Field("pickId") pickId: String,
         @Field("userId") userId: String
     ): Call<Resource<JsonObject>>
-
-    /**
-     * 修改手机号
-     */
-    @FormUrlEncoded
-    @POST("app_changeMobilePhone")
-    fun app_changeMobilePhone(
-        @Field("newPhone") newPhone: String,
-        @Field("userId") userId: String
-    ): Call<Resource<JsonObject>>
-
-    /**
-     * 修改密码
-     */
-    @FormUrlEncoded
-    @POST("app_changePassword")
-    fun app_changePassword(
-        @Field("newPassword") newPassword: String,
-        @Field("oldPassword") oldPassword: String,
-        @Field("userId") userId: String
-    ): Call<Resource<JsonObject>>
 }

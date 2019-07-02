@@ -10,7 +10,6 @@ import android.widget.EditText
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.luoyang.quickrun.R
-import com.luoyang.quickrun.utils.ToastUtil
 import com.luoyang.quickrun.viewmodels.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -57,13 +56,16 @@ class LoginActivity : BaseActivity() {
 
         //登录接口返回
         viewModel.loginResult.observe(this, Observer {
-            if (it.success) {
-                loading.visibility = View.GONE
-                MainActivity2.mainViewModle.updataDriverInfo()
-                finish()
-            } else {
-                loading.visibility = View.GONE
-                ToastUtil.show(it.message)
+            when {
+                it == "登录成功" -> {
+                    loading.visibility = View.GONE
+                    MainActivity2.mainViewModle.updataDriverInfo()
+                    finish()
+                }
+                else -> {
+                    loading.visibility = View.GONE
+                    showToast(it)
+                }
             }
         })
     }

@@ -9,13 +9,12 @@ import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
+import androidx.core.view.isGone
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.luoyang.quickrun.R
-import com.luoyang.quickrun.utils.ToastUtil
 import com.luoyang.quickrun.viewmodels.ResetPhoneViewModel
 import kotlinx.android.synthetic.main.activity_reset_phone.*
-import timber.log.Timber
 
 /**
  * 手机号码修改
@@ -47,11 +46,17 @@ class ResetPhoneActivity : BaseActivity() {
         textInputLayout2.editText?.afterTextChanged {
             if (viewModel.phoneInputChange(it, 1)) {
                 textInputLayout2.error = ""
+                countdownButton.isGone = false
             } else {
                 textInputLayout2.error = errorTip
+                countdownButton.isGone = true
             }
         }
+        textInputLayout6.editText?.afterTextChanged {
+            viewModel.vcodeInputChange(it)
+        }
         button3.setOnClickListener(this::onClick)
+        countdownButton.setOnClickListener(this::onClick)
 
         viewModel.inputStatus.observe(this, Observer {
             button3.isEnabled = it
@@ -59,9 +64,12 @@ class ResetPhoneActivity : BaseActivity() {
         viewModel.resultMsg.observe(this, Observer {
             when {
                 it == "修改手机号成功" -> finish()
+                it == "发送验证码失败" -> {
+                    countdownButton.resetCounter()
+                    showToast(it)
+                }
                 else -> {
-                    Timber.d(it)
-                    ToastUtil.show(it)
+                    showToast(it)
                 }
             }
         })
@@ -71,8 +79,15 @@ class ResetPhoneActivity : BaseActivity() {
         when (view.id) {
             R.id.button3 -> {
                 view.isEnabled = false
-                viewModel.resetPhone(textInputLayout2.editText?.text.toString())
+                viewModel.resetPhone(
+                    textInputLayout2.editText?.text.toString(),
+                    textInputLayout6.editText?.text.toString()
+                )
                 Handler().postDelayed({ view.isEnabled = true }, 500)
+            }
+            R.id.countdownButton -> {
+                countdownButton.sendVerifyCode()
+                viewModel.send_message(textInputLayout2.editText?.text.toString(), 5)
             }
         }
     }

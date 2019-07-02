@@ -9,7 +9,6 @@ import com.luoyang.quickrun.data.DeliveryManDataSource
 import com.luoyang.quickrun.data.model.DeliveryMan
 import com.luoyang.quickrun.data.model.FreightBill
 import com.luoyang.quickrun.net.QuickRunNetwork
-import com.luoyang.quickrun.net.ResultOfView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -105,7 +104,6 @@ class MainViewModle : ViewModel() {
                             )
                         )
                     }
-                    ResultOfView(resource.success, "".plus(resource.message))
                 }
             } catch (t: Throwable) {
                 errorMsg.value = t.message

@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.luoyang.quickrun.R
 import com.luoyang.quickrun.ui.adapters.DeliveryOrderListAdapter
 import com.luoyang.quickrun.ui.widget.LinearSpacesItemDecoration
-import com.luoyang.quickrun.utils.ToastUtil
 import com.luoyang.quickrun.viewmodels.LoadingListViewModel
 import kotlinx.android.synthetic.main.activity_loading_list.*
 
@@ -78,7 +77,7 @@ class LoadingListActivity : BaseActivity() {
         })
 
         viewModel.resultMsg.observe(this, Observer {
-            ToastUtil.show(it)
+            showToast(it)
         })
 
     }

@@ -18,7 +18,6 @@ import com.luoyang.quickrun.ui.adapters.DeliveryOrderListAdapter
 import com.luoyang.quickrun.ui.adapters.StationListAdapter
 import com.luoyang.quickrun.ui.widget.LinearSpacesItemDecoration
 import com.luoyang.quickrun.utils.AlertDialogUtil
-import com.luoyang.quickrun.utils.ToastUtil
 import com.luoyang.quickrun.viewmodels.TransportRouteViewModel
 import kotlinx.android.synthetic.main.activity_transport_route.*
 
@@ -133,7 +132,7 @@ class TransportRouteActivity : BaseActivity() {
         })
 
         viewModel.resultMsg.observe(this, Observer {
-            ToastUtil.show(it)
+            showToast(it)
         })
 
     }

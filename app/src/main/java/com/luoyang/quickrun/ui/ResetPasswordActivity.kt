@@ -11,7 +11,6 @@ import android.widget.EditText
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.luoyang.quickrun.R
-import com.luoyang.quickrun.utils.ToastUtil
 import com.luoyang.quickrun.viewmodels.ResetPasswordViewModel
 import kotlinx.android.synthetic.main.activity_reset_password.*
 import timber.log.Timber
@@ -73,7 +72,7 @@ class ResetPasswordActivity : BaseActivity() {
             when {
                 it == "密码修改成功" -> finish()
                 else -> {
-                    ToastUtil.show(it)
+                    showToast(it)
                     Timber.d(it)
                 }
             }

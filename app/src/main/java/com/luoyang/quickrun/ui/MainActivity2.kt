@@ -23,7 +23,6 @@ import com.luoyang.quickrun.net.ServiceCreator
 import com.luoyang.quickrun.ui.adapters.FreightBillListAdapter
 import com.luoyang.quickrun.ui.widget.LinearSpacesItemDecoration
 import com.luoyang.quickrun.utils.GlideImageLoaderForBanner
-import com.luoyang.quickrun.utils.ToastUtil
 import com.luoyang.quickrun.viewmodels.MainViewModle
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
@@ -110,7 +109,7 @@ class MainActivity2 : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
             when (freightBill.state) {
                 -1, 0 -> LoadingListActivity.goIn(this, position)
                 1 -> TransportRouteActivity.goIn(this, position)
-                2 -> ToastUtil.show("这个货运单已删除")
+                2 -> showToast("这个货运单已删除")
                 3 -> DeliveryOrderDetailActivity.goIn(this, freightBill.id, freightBill.num)
             }
         }

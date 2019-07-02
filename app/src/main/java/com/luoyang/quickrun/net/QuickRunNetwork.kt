@@ -45,11 +45,13 @@ class QuickRunNetwork {
     suspend fun app_order_inDistribution(freightOrderId: String, pickUpId: String, userId: String) =
         deliveryService.app_order_inDistribution(freightOrderId, pickUpId, userId).await()
 
-    suspend fun app_changeMobilePhone(newPhone: String, userId: String) =
-        deliveryService.app_changeMobilePhone(newPhone, userId).await()
+    suspend fun app_changeMobilePhone(oldPhone: String, newPhone: String, userId: String, code: String) =
+        authService.app_changeMobilePhone(oldPhone, newPhone, userId, code).await()
 
     suspend fun app_changePassword(newPassword: String, oldPassword: String, userId: String) =
-        deliveryService.app_changePassword(newPassword, oldPassword, userId).await()
+        authService.app_changePassword(newPassword, oldPassword, userId).await()
+
+    suspend fun send_message(mobile: String, type: Int) = authService.send_message(mobile, type).await()
 
     private suspend fun <T> Call<T>.await(): T {
         return suspendCoroutine { continuation ->
