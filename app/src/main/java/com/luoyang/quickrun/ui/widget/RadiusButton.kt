@@ -1,56 +1,44 @@
 package com.luoyang.quickrun.ui.widget
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
-import android.view.LayoutInflater
-import android.widget.LinearLayout
+import android.view.Gravity
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.luoyang.quickrun.R
 
 class RadiusButton(context: Context, attrs: AttributeSet, defStyLeAttr: Int) :
-    LinearLayout(context, attrs, defStyLeAttr) {
+    CardView(context, attrs, defStyLeAttr) {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    private lateinit var cardView: CardView
-    private var cardColor: Int = 0
+    var textView: TextView = TextView(context)
+        private set
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.layout_radius_btn, this, true)
-        cardView = findViewById<CardView>(R.id.radius_btn_cardView)
-        val textView = findViewById<TextView>(R.id.radius_btn_content_textView14)
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.RadiusButton)
         if (attributes != null) {
-            cardView.isEnabled = attributes.getBoolean(R.styleable.RadiusButton_btnEnable, true)
-            cardView.radius = attributes.getDimension(R.styleable.RadiusButton_btnRadius, 2F)
-            cardColor = attributes.getColor(
-                R.styleable.RadiusButton_btnBackground,
-                resources.getColor(R.color.colorPrimary)
-            )
-            if (cardView.isEnabled) {
-                cardView.setCardBackgroundColor(cardColor)
+            textView.text = attributes.getString(R.styleable.RadiusButton_text) ?: "Radius Button"
+            textView.setTextColor(attributes.getColor(R.styleable.RadiusButton_textColor, textView.currentTextColor))
+            isEnabled = attributes.getBoolean(R.styleable.RadiusButton_enabled, true)
+            if (isEnabled) {
+                setCardBackgroundColor(cardBackgroundColor)
+                textView.setTextColor(textView.currentTextColor)
+                cardElevation = 4F
             } else {
-                cardView.setCardBackgroundColor(resources.getColor(android.R.color.holo_blue_dark))
+                setCardBackgroundColor(Color.parseColor("#FFD6D7D7"))
+                textView.setTextColor(Color.parseColor("#FFA0A0A0"))
+                cardElevation = 0F
             }
-            textView.text = attributes.getString(R.styleable.RadiusButton_btnText)
-            textView.setTextColor(
-                attributes.getColor(R.styleable.RadiusButton_btnTextColor, resources.getColor(android.R.color.white))
-            )
         }
         attributes.recycle()
+        val layoutParams = LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        layoutParams.gravity = Gravity.CENTER
+        layoutParams.topMargin = 40
+        layoutParams.bottomMargin = 40
+        addView(textView, layoutParams)
     }
 
-    fun setBtnEnable(boolean: Boolean) {
-        cardView.isEnabled = boolean
-        if (boolean) {
-            cardView.setCardBackgroundColor(cardColor)
-        } else {
-            cardView.setCardBackgroundColor(resources.getColor(android.R.color.holo_blue_dark))
-        }
-    }
-
-    override fun setOnClickListener(listener: OnClickListener) {
-        cardView.setOnClickListener(listener)
-    }
 }
