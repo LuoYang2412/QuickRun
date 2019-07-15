@@ -1,5 +1,7 @@
 package com.luoyang.quickrun.net
 
+import com.javalong.retrofitmocker.createMocker
+import com.luoyang.quickrun.BuildConfig
 import com.luoyang.quickrun.ui.MainActivity2
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -35,6 +37,6 @@ object ServiceCreator {
 
     private val retrofit = builder.build()
 
-    fun <T> create(serviceClass: Class<T>): T = retrofit.create(serviceClass)
+    fun <T> create(serviceClass: Class<T>): T = retrofit.createMocker(serviceClass, BuildConfig.DEBUG)
 
 }
