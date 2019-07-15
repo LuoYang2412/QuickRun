@@ -22,7 +22,7 @@
             android:layout_marginStart="8dp"
             app:layout_constraintHorizontal_bias="0.0"
             android:layout_marginTop="8dp"
-            tools:text="货运单号：1220354"
+            tools:text="出库单号：1220354"
             />
 
     <androidx.recyclerview.widget.RecyclerView

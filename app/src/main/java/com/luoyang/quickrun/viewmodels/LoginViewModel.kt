@@ -18,7 +18,7 @@ class LoginViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 withContext(Dispatchers.IO) {
-                    val resource = QuickRunNetwork.getInstance().login(mobileNo, AESUtils.encrypt(password))
+                    val resource = QuickRunNetwork.getInstance().login(mobileNo, password)
                     if (resource.success) {
                         DeliveryManDataSource.save(resource.data!!)
                         loginResult.postValue("登录成功")

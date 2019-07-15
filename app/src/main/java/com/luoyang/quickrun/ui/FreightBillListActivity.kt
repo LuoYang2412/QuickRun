@@ -68,7 +68,7 @@ class FreightBillListActivity : BaseActivity() {
                 -1, 0 -> LoadingListActivity.goIn(this, position)
                 1 -> TransportRouteActivity.goIn(this, position)
                 2 -> showToast("这个货运单已删除")
-                3 -> DeliveryOrderDetailActivity.goIn(this, freightBill.id, freightBill.num)
+                3 -> DeliveryOrderDetailActivity.goIn(this, freightBill.id, freightBill.outputNum)
             }
         }
         recyclerView6.adapter = freightBillListAdapter

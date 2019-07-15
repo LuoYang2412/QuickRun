@@ -69,7 +69,7 @@ class MainViewModle : ViewModel() {
                     val resource = QuickRunNetwork.getInstance()
                         .app_freightOrder_getAll("1", driver.value!!.uid)
                     if (resource.success) {
-                        val freightOrderList = resource.data!!["freightOrderList"]
+                        val freightOrderList = resource.data!!["outputList"]
                         val type = object : TypeToken<ArrayList<FreightBill>>() {}.type
                         val fromJson = Gson().fromJson<ArrayList<FreightBill>>(
                             freightOrderList,
@@ -96,7 +96,7 @@ class MainViewModle : ViewModel() {
                     val resource = QuickRunNetwork.getInstance()
                         .app_freightOrder_getAll("0", driver.value!!.uid)
                     if (resource.success) {
-                        val jsonElement = resource.data!!["freightOrderList"]
+                        val jsonElement = resource.data!!["outputList"]
                         freightBillUnDone.postValue(
                             Gson().fromJson(
                                 jsonElement,

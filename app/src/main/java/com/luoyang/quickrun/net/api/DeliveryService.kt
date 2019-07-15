@@ -13,18 +13,18 @@ interface DeliveryService {
      * @param state 0未完成，1已完成
      */
     @FormUrlEncoded
-    @POST("app_freightOrder_getAll")
+    @POST("app_output_getAll")
     fun app_freightOrder_getAll(@Field("state") state: String, @Field("userId") userId: String): Call<Resource<JsonObject>>
 
     /**
      * 查询所有订单
-     * @param freightOrderId 货运单号
+     * @param outputId 出库单号
      * @param pickUpId 提货点ID ""表示所有提货点
      */
     @FormUrlEncoded
     @POST("app_order_getAll")
     fun app_order_getAll(
-        @Field("freightOrderId") freightOrderId: String, @Field("pickUpId") pickUpId: String,
+        @Field("outputId") outputId: String, @Field("pickUpId") pickUpId: String,
         @Field("userId") userId: String
     ): Call<Resource<JsonObject>>
 
@@ -34,7 +34,7 @@ interface DeliveryService {
     @FormUrlEncoded
     @POST("app_route_getRoute")
     fun app_route_getRoute(
-        @Field("freightOrderId") freightOrderId: String,
+        @Field("outputId") outputId : String,
         @Field("userId") userId: String
     ): Call<Resource<JsonObject>>
 

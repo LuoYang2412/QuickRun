@@ -29,7 +29,7 @@ class QuickRunNetwork {
 
     /**
      * 查询所有订单
-     * @param freightOrderId 货运单号
+     * @param freightOrderId 出库单号
      * @param pickUpId 提货点ID ""表示所有提货点
      */
     suspend fun app_order_getAll(freightOrderId: String, pickUpId: String, userId: String) =
