@@ -1,0 +1,37 @@
+{
+  "code": "200",
+  "message": "请求成功",
+  "success": true,
+  "data": {
+    "outputList": [
+      {
+        "id": "612d9cc5a36a4389a2447701ec0b6d58",
+        "outputNum": "CK1907150000XCFTI5",
+        "state": 1,
+        "createUserId": "9b4ad6c856b44db1907e46a91b57f296",
+        "createDate": "2019-07-15 09:09:54.0",
+        "handover": "e92349d4fb5741d19299923fd95cf180",
+        "manager": "9b4ad6c856b44db1907e46a91b57f296",
+        "outputDate": "2019-07-15 09:09:54",
+        "warehouseId": 32,
+        "carsId": "a0df81a37cec4c508e9861e8ef45c380",
+        "routeId": "0d6cb3ef8a9b4a88b20f52613295467b",
+        "route": "测试1"
+      },
+      {
+        "id": "eb9ff8c36e7241139729818106c7e4e5",
+        "outputNum": "CK19071200006TN6PE",
+        "state": 1,
+        "createUserId": "9b4ad6c856b44db1907e46a91b57f296",
+        "createDate": "2019-07-12 15:37:31.0",
+        "handover": "e92349d4fb5741d19299923fd95cf180",
+        "manager": "9b4ad6c856b44db1907e46a91b57f296",
+        "outputDate": "2019-07-12 15:37:31",
+        "warehouseId": 32,
+        "carsId": "a0df81a37cec4c508e9861e8ef45c380",
+        "routeId": "0d6cb3ef8a9b4a88b20f52613295467b",
+        "route": "测试1"
+      }
+    ]
+  }
+}

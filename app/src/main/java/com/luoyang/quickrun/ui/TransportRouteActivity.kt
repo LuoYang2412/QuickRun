@@ -45,7 +45,7 @@ class TransportRouteActivity : BaseActivity() {
 
         val freightsPosition = intent.getIntExtra("position", 0)
         freightOrderId = MainActivity2.mainViewModle.freightBillUnDone.value?.get(freightsPosition)?.id ?: ""
-        freightOrderNum = MainActivity2.mainViewModle.freightBillUnDone.value?.get(freightsPosition)?.num ?: ""
+        freightOrderNum = MainActivity2.mainViewModle.freightBillUnDone.value?.get(freightsPosition)?.outputNum ?: ""
 
         val orderListAdapter = DeliveryOrderListAdapter()
         orderListAdapter.isFirstOnly(false)

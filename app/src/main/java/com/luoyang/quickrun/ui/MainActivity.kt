@@ -69,7 +69,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             DeliveryOrderDetailActivity.goIn(
                 this,
                 freightBill.id,
-                freightBill.num
+                freightBill.outputNum
             )
         }
         recyclerView5.adapter = freightBillListAdapter

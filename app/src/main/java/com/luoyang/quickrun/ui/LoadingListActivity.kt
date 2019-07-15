@@ -46,7 +46,7 @@ class LoadingListActivity : BaseActivity() {
         val freightsPosition = intent.getIntExtra("position", 0)
 
         MainActivity2.mainViewModle.freightBillUnDone.observe(this, Observer { freights ->
-            textView11.text = resources.getString(R.string.freight_id).plus(freights[freightsPosition].num)
+            textView11.text = resources.getString(R.string.freight_id).plus(freights[freightsPosition].outputNum)
             if (myLoadingListAdapter.footerLayoutCount == 0) {
                 val footerView = layoutInflater.inflate(R.layout.layout_radius_btn, recyclerView2, false)
                 myLoadingListAdapter.addFooterView(footerView)
