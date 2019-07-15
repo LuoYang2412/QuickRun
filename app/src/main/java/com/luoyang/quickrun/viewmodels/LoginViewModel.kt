@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.luoyang.quickrun.data.DeliveryManDataSource
 import com.luoyang.quickrun.net.QuickRunNetwork
+import com.luoyang.quickrun.utils.AESUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -17,7 +18,7 @@ class LoginViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 withContext(Dispatchers.IO) {
-                    val resource = QuickRunNetwork.getInstance().login(mobileNo, password)
+                    val resource = QuickRunNetwork.getInstance().login(mobileNo, AESUtils.encrypt(password))
                     if (resource.success) {
                         DeliveryManDataSource.save(resource.data!!)
                         loginResult.postValue("登录成功")
