@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'freight_bill.dart';
+part of 'freight_bill_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

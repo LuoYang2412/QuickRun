@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'freight_bill.g.dart';
+part 'freight_bill_model.g.dart';
 
 ///运单
 @JsonSerializable()

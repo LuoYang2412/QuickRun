@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:quickrun_flutter/common/config/config.dart';
+import 'package:quick_run_flutter/common/config/config.dart';
 
 /// Log 拦截器
 /// Created by guoshuyu

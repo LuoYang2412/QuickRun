@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:quickrun_flutter/model/order.dart';
-import 'package:quickrun_flutter/model/station.dart';
-import 'package:quickrun_flutter/widgets/order_item.dart';
-import 'package:quickrun_flutter/widgets/station_item.dart';
+import 'package:quick_run_flutter/model/order_model.dart';
+import 'package:quick_run_flutter/model/station_model.dart';
+import 'package:quick_run_flutter/widgets/order_item.dart';
+import 'package:quick_run_flutter/widgets/station_item.dart';
 
 class DetailPage extends StatefulWidget {
   static final pName = "detail";

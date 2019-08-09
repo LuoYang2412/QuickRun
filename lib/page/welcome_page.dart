@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'login.dart';
+import 'login_page.dart';
 
 class WelcomePage extends StatefulWidget {
   static final pName = "/";

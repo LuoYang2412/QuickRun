@@ -1,5 +1,5 @@
-import 'package:quickrun_flutter/common/event/http_error_event.dart';
-import 'package:quickrun_flutter/common/event/index.dart';
+import 'package:quick_run_flutter/common/event/http_error_event.dart';
+import 'package:quick_run_flutter/common/event/index.dart';
 
 
 ///错误编码

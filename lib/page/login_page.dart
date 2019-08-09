@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:toast/toast.dart';
-
-import 'home.dart';
+import 'package:quick_run_flutter/common/dao/user_dao.dart';
+import 'package:quick_run_flutter/common/utils/common_utils.dart';
+import 'package:quick_run_flutter/common/utils/navigator_utils.dart';
 
 class LoginPage extends StatefulWidget {
   static final pName = "login";
@@ -40,7 +41,7 @@ class _LoginPateState extends State<LoginPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text("登录"),
+          title: Text("登录",),
         ),
         body: Center(
             child: SafeArea(
@@ -71,6 +72,9 @@ class _LoginPateState extends State<LoginPage> {
                     decoration: InputDecoration(
                         hintText: "请输入用户名或账号",
                         icon: Icon(Icons.supervisor_account)),
+                    onChanged: (String value) {
+                      _userName = value;
+                    },
                   ),
                   Padding(padding: EdgeInsets.only(top: 20)),
                   Text("密码:"),
@@ -80,6 +84,9 @@ class _LoginPateState extends State<LoginPage> {
                     decoration: InputDecoration(
                         hintText: "请输入密码",
                         icon: Icon(Icons.enhanced_encryption)),
+                    onChanged: (String value) {
+                      _password = value;
+                    },
                   ),
                   Padding(padding: EdgeInsets.only(top: 20)),
                   Container(
@@ -101,8 +108,23 @@ class _LoginPateState extends State<LoginPage> {
                             )
                           ]),
                       onPressed: () {
-                        Toast.show("登录成功", context, gravity: Toast.BOTTOM);
-                        Navigator.pushReplacementNamed(context, HomePage.pName);
+                        if (_userName == null || _userName.length == 0) {
+                          return;
+                        }
+                        if (_password == null || _password.length == 0) {
+                          return;
+                        }
+                        CommonUtils.showLoadingDialog(context);
+                        UserDao.login(_userName.trim(), _password.trim(), null)
+                            .then((res) {
+                          Navigator.pop(context);
+                          if (res != null && res.result) {
+                            new Future.delayed(const Duration(seconds: 1), () {
+                              NavigatorUtils.goHome(context);
+                              return true;
+                            });
+                          }
+                        });
                       },
                     ),
                   )

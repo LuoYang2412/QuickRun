@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:quickrun_flutter/common/net/code.dart';
-import 'package:quickrun_flutter/common/net/result_data.dart';
+import 'package:quick_run_flutter/common/net/code.dart';
+import 'package:quick_run_flutter/common/net/result_data.dart';
 
 /// Token拦截器
 /// Created by guoshuyu

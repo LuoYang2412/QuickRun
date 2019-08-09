@@ -1,16 +1,16 @@
-import 'package:quickrun_flutter/common/config/config.dart';
+import 'package:quick_run_flutter/common/config/config.dart';
 
 ///地址数据
 class Address {
-  static const String host = "https://api.github.com/";
+  static const String host = "https://api.mobile.com/";
   static const String hostWeb = "https://github.com/";
   static const String downloadUrl = 'https://www.pgyer.com/GSYGithubApp';
   static const String graphicHost = 'https://ghchart.rshah.org/';
   static const String updateUrl = 'https://www.pgyer.com/vj2B';
 
-  ///获取授权  post
-  static getAuthorization() {
-    return "${host}authorizations";
+  ///登录  post
+  static login() {
+    return "${host}login";
   }
 
   ///搜索 get

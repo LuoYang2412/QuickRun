@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:quickrun_flutter/common/config/config.dart';
-import 'package:quickrun_flutter/common/local/local_storage.dart';
+import 'package:quick_run_flutter/common/config/config.dart';
+import 'package:quick_run_flutter/common/local/local_storage.dart';
 
 /// Token拦截器
 /// Created by guoshuyu

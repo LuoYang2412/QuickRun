@@ -1,4 +1,4 @@
-package com.luoyang.quickrun_flutter
+package com.luoyang.quick_run_flutter
 
 import android.os.Bundle
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quickrun_flutter/model/order.dart';
+import 'package:quick_run_flutter/model/order_model.dart';
 
 class OrederItemWidget extends StatelessWidget {
   const OrederItemWidget({

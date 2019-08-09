@@ -2,18 +2,24 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:quickrun_flutter/page/home.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:quick_run_flutter/page/home_page.dart';
 
-import 'page/detail.dart';
-import 'page/login.dart';
-import 'page/welcome.dart';
+import 'common/event/http_error_event.dart';
+import 'common/event/index.dart';
+import 'common/net/code.dart';
+import 'common/style/StringConstant.dart';
+import 'page/detail_page.dart';
+import 'page/login_page.dart';
+import 'page/welcome_page.dart';
 
 void main() {
   runZoned(() {
     SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp],
     ).then((_) {
-      runApp(MyApp());
+      runApp(QuickRunApp());
+      PaintingBinding.instance.imageCache.maximumSize = 100;
     });
   }, onError: (Object obj, StackTrace stack) {
     print(obj);
@@ -21,22 +27,58 @@ void main() {
   });
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class QuickRunApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => QuickRunAppState();
+}
+class QuickRunAppState extends State<QuickRunApp>{
+
+  StreamSubscription stream;
+  @override
+  void initState() {
+    super.initState();
+    ///Stream演示event bus
+    stream = eventBus.on<HttpErrorEvent>().listen((event) {
+      errorHandleFunction(event.code, event.message);
+    });
+  }
+  ///网络错误提醒
+  errorHandleFunction(int code, message) {
+    switch (code) {
+      case Code.NETWORK_ERROR:
+        Fluttertoast.showToast(
+            msg: StringConstant.network_error);
+        break;
+      case 401:
+        Fluttertoast.showToast(
+            msg: StringConstant.network_error_401);
+        break;
+      case 403:
+        Fluttertoast.showToast(
+            msg: StringConstant.network_error_403);
+        break;
+      case 404:
+        Fluttertoast.showToast(
+            msg: StringConstant.network_error_404);
+        break;
+      case Code.NETWORK_TIMEOUT:
+      //超时
+        Fluttertoast.showToast(
+            msg:StringConstant.network_error_timeout);
+        break;
+      default:
+        Fluttertoast.showToast(
+            msg: StringConstant.network_error_unknown +
+                " " +
+                message);
+        break;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       routes: {

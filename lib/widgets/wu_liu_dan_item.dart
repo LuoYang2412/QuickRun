@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quickrun_flutter/model/freight_bill.dart';
+import 'package:quick_run_flutter/model/freight_bill_model.dart';
 
 class WuLiuDanItem extends StatelessWidget {
   FreightBill _freightBill;

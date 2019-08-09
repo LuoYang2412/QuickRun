@@ -1,11 +1,11 @@
 import 'package:banner_view/banner_view.dart';
 import 'package:flutter/material.dart' hide RefreshIndicator;
 import 'package:flutter/widgets.dart';
-import 'package:quickrun_flutter/model/freight_bill.dart';
-import 'package:quickrun_flutter/widgets/refresh_indicator.dart';
-import 'package:quickrun_flutter/widgets/wu_liu_dan_item.dart';
+import 'package:quick_run_flutter/model/freight_bill_model.dart';
+import 'package:quick_run_flutter/widgets/refresh_indicator.dart';
+import 'package:quick_run_flutter/widgets/wu_liu_dan_item.dart';
 
-import 'detail.dart';
+import 'detail_page.dart';
 
 class HomePage extends StatefulWidget {
   static final pName = "home";

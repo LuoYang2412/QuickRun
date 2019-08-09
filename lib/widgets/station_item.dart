@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quickrun_flutter/model/station.dart';
+import 'package:quick_run_flutter/model/station_model.dart';
 
 class StationItem extends StatelessWidget {
   StationItem(this.station);

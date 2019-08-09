@@ -1,6 +1,6 @@
-# quickrun_flutter
+# quick_run_flutter
 
-A new Flutter application.
+QuickRun Of Flutter
 
 ## Getting Started
 

@@ -1,8 +1,8 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:dio/dio.dart';
 
-import 'package:quickrun_flutter/common/net/code.dart';
-import 'package:quickrun_flutter/common/net/result_data.dart';
+import 'package:quick_run_flutter/common/net/code.dart';
+import 'package:quick_run_flutter/common/net/result_data.dart';
 
 ///是否需要弹提示
 const NOT_TIP_KEY = "noTip";
